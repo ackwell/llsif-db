@@ -1,3 +1,5 @@
 .*/
 venv
 Vagrantfile
+*.sublime-*
+*.pyc
