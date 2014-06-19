@@ -32,7 +32,7 @@ class Router(object):
 		module = importlib.import_module('app.controllers.' + controller)
 		return getattr(module, func)
 
-	methods = [
+	_methods = [
 		'get',
 		'post',
 		'put',
@@ -46,12 +46,12 @@ class Router(object):
 			return wrapper
 
 		# They specified a specific http method
-		if name in self.methods:
+		if name in self._methods:
 			return get_wrapper([name.upper()])
 
 		# Binding on all methods
 		if name == 'all':
-			return get_wrapper(self.methods)
+			return get_wrapper(self._methods)
 
 		# Nothing found, pass to parent
 		return getattr(super(Application, self), name)
