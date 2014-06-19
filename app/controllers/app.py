@@ -1,3 +1,5 @@
 
+from flask import render_template
+
 def hello():
-	return 'Hello World!'
+	return render_template('hello.html')
