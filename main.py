@@ -1,20 +1,36 @@
 
 from flask import Flask, Blueprint
 from app import router
+import importlib
 
 
-# Extending to allow nicer routing interface
-class Application(Flask):
+# Nicer routing interface, passed to router.routes
+class Router(object):
+	def __init__(self, app):
+		self.app = app
+
 	def route(self, rule, action=None, **kwargs):
 		# Function that will either be called manually, or returned as a decorator
 		def add_rule(func):
-			self.add_url_rule(rule, func.__name__, func, **kwargs)
+			name = kwargs.pop('name', None)
+			self.app.add_url_rule(rule, name, func, **kwargs)
 
-		# If action isn't None, it's likely being called as a function
+		# If action is none, the function is likely being used as a decorator
 		if action is None:
 			return add_rule
 
-		# TODO: Handle external controllers
+		func = self._get_view_function(action)
+		add_rule(func)
+
+	def _get_view_function(self, action):
+		# TODO: Possibly handle more action formats
+		controller, func = action.split('.')
+		
+		# TODO: Error handling
+		# TODO: Config for controller directory
+		# TODO: Possible support for controller classes
+		module = importlib.import_module('app.controllers.' + controller)
+		return getattr(module, func)
 
 	methods = [
 		'get',
@@ -42,10 +58,10 @@ class Application(Flask):
 
 
 if __name__ == '__main__':
-	app = Application(__name__)
+	app = Flask(__name__)
 
 	# Load up the routes
-	router.routes(app)
+	router.routes(Router(app))
 
 	# TODO: config option for debug, host, etc
 	app.run(host='0.0.0.0', debug=True)

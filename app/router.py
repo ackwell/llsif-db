@@ -1,6 +1,4 @@
 
-def routes(app):
+def routes(route):
 
-	@app.all('/')
-	def hello():
-		return 'Hello World!'
+	route.all('/', 'app.hello')
