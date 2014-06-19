@@ -1,4 +1,4 @@
 
 def routes(route):
 
-	route.all('/', 'app.hello')
+	route.all('/', 'hello')
