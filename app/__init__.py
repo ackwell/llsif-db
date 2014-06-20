@@ -1,5 +1,7 @@
 
-from flagon import Flagon
+from flask import Flask
 
-def create_app():
-	return Flagon(__name__)
+app = Flask(__name__)
+app.config.from_object('app.config')
+
+from app import routes

@@ -1,26 +1,7 @@
 
-# Tiny bit of abstraction on top of Flask because hey why not
+# Flagon - random shit I write because Flask isn't perfect
 
-from flask import Flask
 import importlib
-
-
-# Flask wrapper
-class Flagon(Flask):
-	def __init__(self, *args, **kwargs):
-		# Get settings from the kwargs
-		self._app_module = kwargs.pop('app_module', 'app')
-
-		# Set up Flask
-		super(Flagon, self).__init__(*args, **kwargs)
-
-		# Do other stuff
-		self._initiate_routes()
-
-	def _initiate_routes(self):
-		router = importlib.import_module(self._app_module + '.router')
-		router.routes(Router(self))
-
 
 # Nicer routing interface
 class Router(object):
