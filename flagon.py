@@ -23,7 +23,7 @@ class Router(object):
 
 	def _get_view_function(self, action):
 		# TODO: Possibly handle more action formats
-		controller, func = action.split('.') if '.' in action else ('app', action,)
+		controller, func = action.split('.') if '.' in action else ('default', action,)
 
 		# TODO: Error handling
 		# TODO: Config for controller directory

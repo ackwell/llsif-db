@@ -4,23 +4,19 @@ from app.models import db
 
 # Card container
 class Card(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
+	id = db.Column(db.Integer, primary_key=True, autoincrement=False)
 	name = db.Column(db.String(32))
 
 	normal_state_id = db.Column(db.Integer, db.ForeignKey('state.id'))
-	normal_state = db.relationship('State', uselist=False)
+	normal_state = db.relationship('State', uselist=False, foreign_keys=[normal_state_id])
 
 	idolised_state_id = db.Column(db.Integer, db.ForeignKey('state.id'))
-	idolised_state = db.relationship('State', uselist=False)
+	idolised_state = db.relationship('State', uselist=False, foreign_keys=[idolised_state_id])
 
 	attribute_id = db.Column(db.Integer, db.ForeignKey('attribute.id'))
-	attribute = db.relationship('Attribute', backref='cards', lazy='dynamic')
 
 	skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
-	skill = db.relationship('Skill', backref='cards', lazy='dynamic')
-
 	appeal_id = db.Column(db.Integer, db.ForeignKey('appeal.id'))
-	appeal = db.relationship('Appeal', backref='cards', lazy='dynamic')
 
 	availability = db.relationship('Availability', backref='cards', lazy='dynamic')
 
@@ -30,7 +26,6 @@ class State(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 
 	rarity_id = db.Column(db.Integer, db.ForeignKey('rarity.id'))
-	rarity = db.relationship('Rarity', backref='states', lazy='dynamic')
 
 	icon = db.Column(db.String(64))
 	image = db.Column(db.String(64))
@@ -43,8 +38,10 @@ class State(db.Model):
 
 # Data that is only dependant on the rarity
 class Rarity(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
+	id = db.Column(db.Integer, primary_key=True, autoincrement=False)
 	name = db.Column(db.String(20))
+
+	states = db.relationship('State', backref='rarity', lazy='dynamic')
 
 	level = db.Column(db.Integer)
 	bond = db.Column(db.Integer)
@@ -55,17 +52,19 @@ class Attribute(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(10))
 
+	cards = db.relationship('Card', backref='attribute', lazy='dynamic')
+	skills = db.relationship('Skill', backref='attribute', lazy='dynamic')
+
 
 # Card's centre skills
 class Skill(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(32))
+	cards = db.relationship('Card', backref='skill', lazy='dynamic')
 
 	description = db.Column(db.Text)
 
 	attribute_id = db.Column(db.Integer, db.ForeignKey('attribute.id'))
-	attribute = db.relationship('Attribute', backref='cards', lazy='dynamic')
-
 	bonus = db.Column(db.Integer)
 
 
@@ -73,6 +72,7 @@ class Skill(db.Model):
 class Appeal(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(32))
+	cards = db.relationship('Card', backref='appeal', lazy='dynamic')
 
 	description = db.Column(db.Text)
 
