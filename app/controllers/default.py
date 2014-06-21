@@ -3,6 +3,8 @@ from flask import render_template
 from app import models
 
 def hello():
-	print models.Card.query.all()
+	data = dict()
 
-	return render_template('hello.html')
+	data['cards'] = models.Card.query.all()
+
+	return render_template('hello.html', **data)
