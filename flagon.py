@@ -11,7 +11,7 @@ class Router(object):
 	def route(self, rule, action=None, **kwargs):
 		# Function that will either be called manually, or returned as a decorator
 		def add_rule(func):
-			name = kwargs.pop('name', None)
+			name = kwargs.pop('name', action)
 			self.app.add_url_rule(rule, name, func, **kwargs)
 
 		# If action is none, the function is likely being used as a decorator
