@@ -8,3 +8,4 @@ DEBUG = True
 # Database
 SQLALCHEMY_DATABASE_URI = "mysql://lovelive:lovelive@localhost/lovelive"
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'database')
+SQLALCHEMY_ECHO = True

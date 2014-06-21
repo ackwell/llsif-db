@@ -8,17 +8,25 @@ class Card(db.Model):
 	name = db.Column(db.String(32))
 
 	normal_state_id = db.Column(db.Integer, db.ForeignKey('state.id'))
-	normal_state = db.relationship('State', uselist=False, foreign_keys=[normal_state_id])
+	normal_state = db.relationship('State',
+		uselist=False,
+		foreign_keys=[normal_state_id],
+		lazy='joined')
 
 	idolised_state_id = db.Column(db.Integer, db.ForeignKey('state.id'))
-	idolised_state = db.relationship('State', uselist=False, foreign_keys=[idolised_state_id])
+	idolised_state = db.relationship('State',
+		uselist=False,
+		foreign_keys=[idolised_state_id],
+		lazy='joined')
 
 	attribute_id = db.Column(db.Integer, db.ForeignKey('attribute.id'))
 
 	skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
 	appeal_id = db.Column(db.Integer, db.ForeignKey('appeal.id'))
 
-	availability = db.relationship('Availability', backref='cards', lazy='dynamic')
+	availability = db.relationship('Availability',
+		backref='cards',
+		lazy='dynamic')
 
 
 # Card data that differs depending on idolised status
@@ -41,7 +49,9 @@ class Rarity(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=False)
 	name = db.Column(db.String(20))
 
-	states = db.relationship('State', backref='rarity', lazy='dynamic')
+	states = db.relationship('State',
+		backref='rarity',
+		lazy='dynamic')
 
 	level = db.Column(db.Integer)
 	bond = db.Column(db.Integer)
@@ -52,15 +62,23 @@ class Attribute(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(10))
 
-	cards = db.relationship('Card', backref='attribute', lazy='dynamic')
-	skills = db.relationship('Skill', backref='attribute', lazy='dynamic')
+	cards = db.relationship('Card',
+		backref=db.backref('attribute', lazy='joined'),
+		lazy='dynamic')
+
+	skills = db.relationship('Skill',
+		backref='attribute',
+		lazy='dynamic')
 
 
 # Card's centre skills
 class Skill(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(32))
-	cards = db.relationship('Card', backref='skill', lazy='dynamic')
+
+	cards = db.relationship('Card',
+		backref=db.backref('skill', lazy='joined'),
+		lazy='dynamic')
 
 	description = db.Column(db.Text)
 
@@ -72,7 +90,10 @@ class Skill(db.Model):
 class Appeal(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(32))
-	cards = db.relationship('Card', backref='appeal', lazy='dynamic')
+
+	cards = db.relationship('Card',
+		backref=db.backref('appeal', lazy='joined'),
+		lazy='dynamic')
 
 	description = db.Column(db.Text)
 
