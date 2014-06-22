@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1>New Card</h1>
-<form action="" method="post" role="form">
+<form action="{{ url_for('cards.store') }}" method="post" role="form">
 	{{ form.hidden_tag() }}
 
 	{# Primary metadata #}
@@ -16,6 +16,7 @@
 
 	{# States #}
 	{% for state in (form.normal, form.idolised,) %}
+		{{ state.hidden_tag() }}
 		<div class="row">
 			<div class="col-md-1">
 				<strong>{{ state.label }}:</strong>
@@ -32,7 +33,15 @@
 	{# Skills #}
 	<div class="row">
 		<div class="col-md-4">{{ f.field(form.skill) }}</div>
+		<div class="col-md-2">
+			<label>&nbsp;</label>
+			<a href="#" class="btn btn-default btn-block">Add new skill</a>
+		</div>
 		<div class="col-md-4">{{ f.field(form.appeal) }}</div>
+		<div class="col-md-2"><div class="form-group">
+			<label>&nbsp;</label>
+			<a href="#" class="btn btn-default btn-block">Add new appeal</a>
+		</div></div>
 	</div>
 
 	{# Submit #}

@@ -35,8 +35,8 @@ class State(db.Model):
 
 	rarity_id = db.Column(db.Integer, db.ForeignKey('rarity.id'))
 
-	icon = db.Column(db.String(64))
-	image = db.Column(db.String(64))
+	icon = db.Column(db.String(256))
+	image = db.Column(db.String(256))
 
 	hp = db.Column(db.Integer)
 	smile = db.Column(db.Integer)

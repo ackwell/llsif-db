@@ -1,34 +1,32 @@
 
-from flask import render_template
+from flask import render_template, request, redirect, url_for
 from app import models, forms
 
 def index():
-	data = dict()
-	data['cards'] = models.Card.query.all()
+	data = dict(
+		cards=models.Card.query.all()
+	)
 
 	return render_template('cards/index.html', **data)
 
 
-def new():
-	form = forms.Card()
+def create():
+	data = dict(
+		form=forms.Card()
+	)
 
-	form.attribute.choices = map(
-		lambda attr: (attr.id, attr.name,),
-		models.Attribute.query.all())
+	return render_template('cards/create.html', **data)
 
-	form.rarity.choices = map(
-		lambda rarity: (rarity.id, rarity.name,),
-		models.Rarity.query.filter(models.Rarity.id%2 == 1).all())
 
-	form.skill.choices = map(
-		lambda skill: (skill.id, skill.name,),
-		models.Skill.query.all())
+def store():
+	form = forms.Card(request.form)
 
-	form.appeal.choices = map(
-		lambda appeal: (appeal.id, appeal.name,),
-		models.Appeal.query.all())
+	if form.validate():
+		# save
+		return redirect(url_for('cards.index'))
 
-	data = dict()
-	data['form'] = form
+	data = dict(
+		form=form
+	)
 
-	return render_template('cards/new.html', **data)
+	return render_template('cards/create.html', **data)
