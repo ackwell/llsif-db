@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import 'macro/form.html' as f %}
 
 {% block content %}
 <h1>New Card</h1>
@@ -7,96 +8,31 @@
 
 	{# Primary metadata #}
 	<div class="row">
-		<div class="col-md-1"><div class="form-group">
-			<label for="id">ID</label>
-			{{ form.id(class='form-control') }}
-		</div></div>
-		<div class="col-md-7"><div class="form-group">
-			<label for="name">Name</label>
-			{{ form.name(class='form-control') }}
-		</div></div>
-		<div class="col-md-2"><div class="form-group">
-			<label for="attribute">Attribute</label>
-			{{ form.attribute(class='form-control') }}
-		</div></div>
-		<div class="col-md-2"><div class="form-group">
-			<label for="rarity">Rarity</label>
-			{{ form.rarity(class='form-control') }}
-		</div></div>
+		<div class="col-md-1">{{ f.field(form.id) }}</div>
+		<div class="col-md-7">{{ f.field(form.name) }}</div>
+		<div class="col-md-2">{{ f.field(form.attribute) }}</div>
+		<div class="col-md-2">{{ f.field(form.rarity) }}</div>
 	</div>
 
-	{# Normal state #}
-	<div class="row">
-		<div class="col-md-1">
-			<strong>Normal:</strong>
+	{# States #}
+	{% for state in (form.normal, form.idolised,) %}
+		<div class="row">
+			<div class="col-md-1">
+				<strong>{{ state.label }}:</strong>
+			</div>
+			<div class="col-md-1">{{ f.field(state.hp) }}</div>
+			<div class="col-md-1">{{ f.field(state.smile) }}</div>
+			<div class="col-md-1">{{ f.field(state.pure) }}</div>
+			<div class="col-md-1">{{ f.field(state.cool) }}</div>
+			<div class="col-md-3">{{ f.field(state.icon) }}</div>
+			<div class="col-md-4">{{ f.field(state.image) }}</div>
 		</div>
-		<div class="col-md-1"><div class="form-group">
-			<label for="normal-hp">HP</label>
-			{{ form.normal.hp(class='form-control') }}
-		</div></div>
-		<div class="col-md-1"><div class="form-group">
-			<label for="normal-smile">Smile</label>
-			{{ form.normal.smile(class='form-control') }}
-		</div></div>
-		<div class="col-md-1"><div class="form-group">
-			<label for="normal-pure">Pure</label>
-			{{ form.normal.pure(class='form-control') }}
-		</div></div>
-		<div class="col-md-1"><div class="form-group">
-			<label for="normal-cool">Cool</label>
-			{{ form.normal.cool(class='form-control') }}
-		</div></div>
-		<div class="col-md-3"><div class="form-group">
-			<label for="normal-icon">Icon</label>
-			{{ form.normal.icon }}
-		</div></div>
-		<div class="col-md-3"><div class="form-group">
-			<label for="normal-image">Image</label>
-			{{ form.normal.image }}
-		</div></div>
-	</div>
-
-	{# Idolised state #}
-	<div class="row">
-		<div class="col-md-1">
-			<strong>Idolised:</strong>
-		</div>
-		<div class="col-md-1"><div class="form-group">
-			<label for="idolised-hp">HP</label>
-			{{ form.idolised.hp(class='form-control') }}
-		</div></div>
-		<div class="col-md-1"><div class="form-group">
-			<label for="idolised-smile">Smile</label>
-			{{ form.idolised.smile(class='form-control') }}
-		</div></div>
-		<div class="col-md-1"><div class="form-group">
-			<label for="idolised-pure">Pure</label>
-			{{ form.idolised.pure(class='form-control') }}
-		</div></div>
-		<div class="col-md-1"><div class="form-group">
-			<label for="idolised-cool">Cool</label>
-			{{ form.idolised.cool(class='form-control') }}
-		</div></div>
-		<div class="col-md-3"><div class="form-group">
-			<label for="idolised-icon">Icon</label>
-			{{ form.idolised.icon }}
-		</div></div>
-		<div class="col-md-3"><div class="form-group">
-			<label for="idolised-image">Image</label>
-			{{ form.idolised.image }}
-		</div></div>
-	</div>
+	{% endfor %}
 
 	{# Skills #}
 	<div class="row">
-		<div class="col-md-3"><div class="form-group">
-			<label for="skill">Skill</label>
-			{{ form.skill(class='form-control') }}
-		</div></div>
-		<div class="col-md-3"><div class="form-group">
-			<label for="appeal">Appeal</label>
-			{{ form.appeal(class='form-control') }}
-		</div></div>
+		<div class="col-md-4">{{ f.field(form.skill) }}</div>
+		<div class="col-md-4">{{ f.field(form.appeal) }}</div>
 	</div>
 
 	{# Submit #}

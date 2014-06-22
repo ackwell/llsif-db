@@ -3,22 +3,22 @@ from flask.ext.wtf import Form
 from wtforms import fields as f
 
 class State(Form):
-	hp = f.IntegerField('hp')
-	smile = f.IntegerField('smile')
-	pure = f.IntegerField('pure')
-	cool = f.IntegerField('cool')
-	icon = f.FileField('icon')
-	image = f.FileField('image')
+	hp = f.IntegerField('HP')
+	smile = f.IntegerField('Smile')
+	pure = f.IntegerField('Pure')
+	cool = f.IntegerField('Cool')
+	icon = f.FileField('Icon')
+	image = f.FileField('Image')
 
 
 class Card(Form):
-	id = f.IntegerField('id')
-	name = f.StringField('name')
-	attribute = f.SelectField('attribute', coerce=int)
-	rarity = f.SelectField('rarity', coerce=int)
+	id = f.IntegerField('ID')
+	name = f.StringField('Name')
+	attribute = f.SelectField('Attribute', coerce=int)
+	rarity = f.SelectField('Rarity', coerce=int)
 
-	normal = f.FormField(State)
-	idolised = f.FormField(State)
+	normal = f.FormField(State, label='Normal')
+	idolised = f.FormField(State, label='Idolised')
 
-	skill = f.SelectField('skill', coerce=int)
-	appeal = f.SelectField('appeal', coerce=int)
+	skill = f.SelectField('Skill', coerce=int)
+	appeal = f.SelectField('Appeal', coerce=int)

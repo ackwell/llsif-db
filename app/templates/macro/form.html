@@ -1,0 +1,30 @@
+
+{% macro render_file_field(field) -%}
+<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+	<div class="form-control" data-trigger="fileinput">
+		<span class="glyphicon glyphicon-file fileinput-exists"></span>
+		<span class="fileinput-filename"></span>
+	</div>
+	<span class="input-group-addon btn btn-default btn-file">
+		<span class="fileinput-new">Select file</span>
+		<span class="fileinput-exists">
+			<span class="glyphicon glyphicon-edit"></span>
+		</span>
+		{{ field }}
+	</span>
+	<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">
+		<span class="glyphicon glyphicon-trash"></span>
+	</a>
+</div>
+{%- endmacro %}
+
+{% macro field(field) -%}
+	<div class="form-group {% if field.errors %}error{% endif %}">
+		{{ field.label }}
+		{%- if field.type == 'FileField' %}
+			{{ render_file_field(field) }}
+		{%- else %}
+			{{ field(class='form-control') }}
+		{%- endif %}
+	</div>
+{%- endmacro %}
