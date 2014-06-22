@@ -9,4 +9,4 @@ route.get('/', 'home.index')
 # TODO: I should probably add a namespacing/resource thingy to flagon.Router. Meh.
 route.get('/cards', 'cards.index')
 route.get('/cards/create', 'cards.create')
-route.post('/cards', 'cards.store')
+route.post('/cards/create', 'cards.create')

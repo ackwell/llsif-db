@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1>New Card</h1>
-<form action="{{ url_for('cards.store') }}" method="post" role="form">
+<form action="" method="post" role="form">
 	{{ form.hidden_tag() }}
 
 	{# Primary metadata #}
@@ -15,7 +15,7 @@
 	</div>
 
 	{# States #}
-	{% for state in (form.normal, form.idolised,) %}
+	{% for state in (form.normal_state, form.idolised_state,) %}
 		{{ state.hidden_tag() }}
 		<div class="row">
 			<div class="col-md-1">

@@ -1,52 +1,39 @@
 
 from flask.ext.wtf import Form
-from wtforms import fields as f
-from wtforms import validators as v
 from app import models
 from urlparse import urlparse
+from wtforms.fields import IntegerField, StringField, FormField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms.validators import Optional, InputRequired, ValidationError
 
 def external_url(form, field):
 	url = urlparse(field.data)
 	if url.scheme not in ('http', 'https') or not url.netloc:
-		raise v.ValidationError('Field must be a valid external URL')
+		raise ValidationError('Field must be a valid external URL')
 
 
 class State(Form):
-	hp = f.IntegerField('HP')
-	smile = f.IntegerField('Smile')
-	pure = f.IntegerField('Pure')
-	cool = f.IntegerField('Cool')
-	icon = f.StringField('Icon', [external_url])
-	image = f.StringField('Image', [external_url])
+	hp = IntegerField('HP', [Optional()])
+	smile = IntegerField('Smile', [Optional()])
+	pure = IntegerField('Pure', [Optional()])
+	cool = IntegerField('Cool', [Optional()])
+	icon = StringField('Icon', [external_url, Optional()])
+	image = StringField('Image', [external_url, Optional()])
 
 
 class Card(Form):
-	id = f.IntegerField('ID', [v.InputRequired()])
-	name = f.StringField('Name')
-	attribute = f.SelectField('Attribute', coerce=int)
-	rarity = f.SelectField('Rarity', coerce=int)
+	id = IntegerField('ID', [InputRequired()])
+	name = StringField('Name')
 
-	normal = f.FormField(State, label='Normal')
-	idolised = f.FormField(State, label='Idolised')
+	attribute = QuerySelectField('Attribute',
+		query_factory=lambda: models.Attribute.query.all())
+	rarity = QuerySelectField('Rarity',
+		query_factory=lambda: models.Rarity.query.filter(models.Rarity.id%2 == 1).all())
 
-	skill = f.SelectField('Skill', coerce=int)
-	appeal = f.SelectField('Appeal', coerce=int)
+	normal_state = FormField(State, default=models.State(), label='Normal')
+	idolised_state = FormField(State, default=models.State(), label='Idolised')
 
-	def __init__(self, *args, **kwargs):
-		super(Card, self).__init__(*args, **kwargs)
-
-		self.attribute.choices = map(
-			lambda attr: (attr.id, attr.name,),
-			models.Attribute.query.all())
-
-		self.rarity.choices = map(
-			lambda rarity: (rarity.id, rarity.name,),
-			models.Rarity.query.filter(models.Rarity.id%2 == 1).all())
-
-		self.skill.choices = map(
-			lambda skill: (skill.id, skill.name,),
-			models.Skill.query.all())
-
-		self.appeal.choices = map(
-			lambda appeal: (appeal.id, appeal.name,),
-			models.Appeal.query.all())
+	skill = QuerySelectField('Skill',
+		query_factory=lambda: models.Skill.query.all())
+	appeal = QuerySelectField('Appeal',
+		query_factory=lambda: models.Appeal.query.all())

@@ -56,6 +56,9 @@ class Rarity(db.Model):
 	level = db.Column(db.Integer)
 	bond = db.Column(db.Integer)
 
+	def __repr__(self):
+		return self.name
+
 
 # Attribute of card (Smile / Pure / Cool)
 class Attribute(db.Model):
@@ -69,6 +72,9 @@ class Attribute(db.Model):
 	skills = db.relationship('Skill',
 		backref='attribute',
 		lazy='dynamic')
+
+	def __repr__(self):
+		return self.name
 
 
 # Card's centre skills
@@ -85,6 +91,9 @@ class Skill(db.Model):
 	attribute_id = db.Column(db.Integer, db.ForeignKey('attribute.id'))
 	bonus = db.Column(db.Integer)
 
+	def __repr__(self):
+		return self.name
+
 
 # Card's appeal ability
 class Appeal(db.Model):
@@ -98,6 +107,9 @@ class Appeal(db.Model):
 	description = db.Column(db.Text)
 
 	type = db.Column(db.String(32))
+
+	def __repr__(self):
+		return self.name
 
 
 # Availability of a card across the various regional versions

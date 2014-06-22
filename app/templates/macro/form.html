@@ -1,7 +1,7 @@
 
 {% macro field(field) -%}
-	<div class="form-group {% if field.errors %}error{% endif %}">
-		{{ field.label }}{{field.errors}}
+	<div class="form-group {% if field.errors %}has-error{% endif %}">
+		{{ field.label(class='control-label') }}
 		{{ field(class='form-control') }}
 	</div>
 {%- endmacro %}
