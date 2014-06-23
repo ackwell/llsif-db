@@ -5,7 +5,7 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th colspan="3"></th>
+			<th colspan="4"></th>
 			<th colspan="4">Normal</th>
 			<th colspan="4">Idolised</th>
 			<th colspan="3"></th>
@@ -14,6 +14,7 @@
 			<th>#</th>
 			<th>Name</th>
 			<th>Attribute</th>
+			<th>Rarity</th>
 			<th>HP</th>
 			<th>Smile</th>
 			<th>Pure</th>
@@ -29,7 +30,7 @@
 	</thead>
 	<tfoot>
 		<tr>
-			<td colspan="14">
+			<td colspan="15">
 				<a href="{{ url_for('cards.create') }}" class="btn btn-success btn-sm">
 					<span class="glyphicon glyphicon-plus"></span> Add new card
 				</a>
@@ -42,6 +43,7 @@
 				<td>{{ card.id }}</td>
 				<td>{{ card.name }}</td>
 				<td>{{ card.attribute.name }}</td>
+				<td>{{ card.normal_state.rarity.name }}</td>
 				<td>{{ card.normal_state.hp }}</td>
 				<td>{{ card.normal_state.smile }}</td>
 				<td>{{ card.normal_state.pure }}</td>
@@ -54,7 +56,7 @@
 				<td>{{ card.skill.name }}</td>
 				<td>
 					<div class="btn-group">
-						<a href="#" class="btn btn-info btn-xs">
+						<a href="{{ url_for('cards.edit', card_id=card.id) }}" class="btn btn-info btn-xs">
 							<span class="glyphicon glyphicon-edit"></span>
 						</a>
 						<a href="#" class="btn btn-danger btn-xs">

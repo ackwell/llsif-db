@@ -1,19 +1,21 @@
 
-from flask import render_template, redirect, url_for
-from app import models, forms
+from flask import Blueprint, render_template, redirect, url_for
+from app import app, models, forms
 from sqlalchemy.exc import IntegrityError
 
+controller = Blueprint('cards', __name__)
+
+@controller.route('/')
 def index():
-	data = dict(
-		cards=models.Card.query.all()
-	)
-
-	return render_template('cards/index.html', **data)
+	return render_template('cards/index.html',
+		cards=models.Card.query.all())
 
 
+@controller.route('/create', methods=['GET', 'POST'])
 def create():
 	form = forms.Card()
 
+	# Will only run validations on POST
 	if form.validate_on_submit():
 		# Populate
 		card = models.Card()
@@ -36,8 +38,7 @@ def create():
 		else:
 			return redirect(url_for('cards.index'))
 
-	data = dict(
-		form = form
-	)
+	return render_template('cards/create.html',
+		form=form)
 
-	return render_template('cards/create.html', **data)
+app.register_blueprint(controller, url_prefix='/cards')
