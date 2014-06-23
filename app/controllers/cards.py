@@ -11,14 +11,19 @@ def index():
 		cards=models.Card.query.all())
 
 
-@controller.route('/create', methods=['GET', 'POST'])
-def create():
-	form = forms.Card()
+@controller.route('/create', methods=['GET', 'POST'], endpoint='create')
+@controller.route('/edit/<int:card>', methods=['GET', 'POST'], endpoint='edit')
+def form(card=None):
+	if card is not None:
+		card = models.Card.query.get(card)
+
+	form = forms.Card(obj=card)
 
 	# Will only run validations on POST
 	if form.validate_on_submit():
 		# Populate
-		card = models.Card()
+		if card is None:
+			card = models.Card()
 		form.populate_obj(card)
 
 		# Set the state rarities

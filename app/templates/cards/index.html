@@ -56,7 +56,7 @@
 				<td>{{ card.skill.name }}</td>
 				<td>
 					<div class="btn-group">
-						<a href="{{ url_for('cards.edit', card_id=card.id) }}" class="btn btn-info btn-xs">
+						<a href="{{ url_for('cards.edit', card=card.id) }}" class="btn btn-info btn-xs">
 							<span class="glyphicon glyphicon-edit"></span>
 						</a>
 						<a href="#" class="btn btn-danger btn-xs">
