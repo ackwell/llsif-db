@@ -66,7 +66,7 @@ class Attribute(db.Model):
 	name = db.Column(db.String(10))
 
 	cards = db.relationship('Card',
-		backref=db.backref('attribute', lazy='joined'),
+		backref='attribute',
 		lazy='dynamic')
 
 	skills = db.relationship('Skill',
@@ -83,7 +83,7 @@ class Skill(db.Model):
 	name = db.Column(db.String(32))
 
 	cards = db.relationship('Card',
-		backref=db.backref('skill', lazy='joined'),
+		backref='skill',
 		lazy='dynamic')
 
 	description = db.Column(db.Text)
@@ -101,7 +101,7 @@ class Appeal(db.Model):
 	name = db.Column(db.String(32))
 
 	cards = db.relationship('Card',
-		backref=db.backref('appeal', lazy='joined'),
+		backref='appeal',
 		lazy='dynamic')
 
 	description = db.Column(db.Text)

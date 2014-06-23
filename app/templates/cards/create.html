@@ -6,6 +6,24 @@
 <form action="" method="post" role="form">
 	{{ form.hidden_tag() }}
 
+	{% if form.errors %}
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{% for field, errors in form.errors.iteritems() %}
+				<strong>{{ field|capitalize }}:</strong>
+				{% if errors|length == 1 %}
+					{{ errors[0] }}
+				{% else %}
+					<ul>
+						{% for error in errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endif %}
+
 	{# Primary metadata #}
 	<div class="row">
 		<div class="col-md-1">{{ f.field(form.id) }}</div>

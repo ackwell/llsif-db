@@ -15,16 +15,23 @@ def create():
 	form = forms.Card()
 
 	if form.validate_on_submit():
+		# Populate
 		card = models.Card()
 		form.populate_obj(card)
-		models.db.session.add(card)
 
-		# Catch ID duplicates
+		# Set the state rarities
+		rarity = form.rarity.data
+		card.normal_state.rarity = rarity
+		card.idolised_state.rarity = models.Rarity.query\
+			.filter(models.Rarity.id == rarity.id + 1).first()
+
+		# Save, catching ID duplicates
 		# (Not using a verifier, it'd double the SQL queries, and be a general PITA)
+		models.db.session.add(card)
 		try:
 			models.db.session.commit()
 		except IntegrityError:
-			form.id.errors.append('The specified ID already exists')
+			form.id.errors.append('The specified ID already exists.')
 			models.db.session.rollback()
 		else:
 			return redirect(url_for('cards.index'))
