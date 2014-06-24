@@ -2,7 +2,7 @@
 {% import 'macro/form.html' as f %}
 
 {% block content %}
-<h1>New Card</h1>
+<h1>{{ mode|capitalize }} Card</h1>
 <form action="" method="post" role="form">
 	{{ form.hidden_tag() }}
 

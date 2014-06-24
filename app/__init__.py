@@ -5,5 +5,3 @@ app = Flask(__name__)
 app.config.from_object('app.config')
 
 from app import controllers, models
-
-print app.url_map

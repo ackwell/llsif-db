@@ -14,8 +14,10 @@ def index():
 @controller.route('/create', methods=['GET', 'POST'], endpoint='create')
 @controller.route('/edit/<int:card>', methods=['GET', 'POST'], endpoint='edit')
 def form(card=None):
+	mode = 'new'
 	if card is not None:
 		card = models.Card.query.get(card)
+		mode = 'edit'
 
 	form = forms.Card(obj=card)
 
@@ -29,8 +31,7 @@ def form(card=None):
 		# Set the state rarities
 		rarity = form.rarity.data
 		card.normal_state.rarity = rarity
-		card.idolised_state.rarity = models.Rarity.query\
-			.filter(models.Rarity.id == rarity.id + 1).first()
+		card.idolised_state.rarity = models.Rarity.query.get(rarity.id + 1)
 
 		# Save, catching ID duplicates
 		# (Not using a verifier, it'd double the SQL queries, and be a general PITA)
@@ -43,7 +44,8 @@ def form(card=None):
 		else:
 			return redirect(url_for('cards.index'))
 
-	return render_template('cards/create.html',
-		form=form)
+	return render_template('cards/form.html',
+		form=form,
+		mode=mode)
 
 app.register_blueprint(controller, url_prefix='/cards')
