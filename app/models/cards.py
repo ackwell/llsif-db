@@ -11,13 +11,15 @@ class Card(db.Model):
 	normal_state = db.relationship('State',
 		uselist=False,
 		foreign_keys=[normal_state_id],
-		lazy='joined')
+		lazy='joined',
+		cascade='all')
 
 	idolised_state_id = db.Column(db.Integer, db.ForeignKey('state.id'))
 	idolised_state = db.relationship('State',
 		uselist=False,
 		foreign_keys=[idolised_state_id],
-		lazy='joined')
+		lazy='joined',
+		cascade='all')
 
 	attribute_id = db.Column(db.Integer, db.ForeignKey('attribute.id'))
 
@@ -26,7 +28,8 @@ class Card(db.Model):
 
 	availability = db.relationship('Availability',
 		backref='cards',
-		lazy='dynamic')
+		lazy='dynamic',
+		cascade='all')
 
 
 # Card data that differs depending on idolised status

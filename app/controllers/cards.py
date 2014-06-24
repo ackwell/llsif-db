@@ -48,4 +48,12 @@ def form(card=None):
 		form=form,
 		mode=mode)
 
+
+@controller.route('/delete/<int:card>')
+def delete(card):
+	card = models.Card.query.get(card)
+	models.db.session.delete(card)
+	models.db.session.commit()
+	return redirect(url_for('cards.index'))
+
 app.register_blueprint(controller, url_prefix='/cards')
