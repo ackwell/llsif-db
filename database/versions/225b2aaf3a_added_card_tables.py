@@ -71,11 +71,17 @@ def upgrade():
     sa.ForeignKeyConstraint(['skill_id'], ['skill.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('region',
+    sa.Column('id', sa.String(length=8), nullable=False),
+    sa.Column('name', sa.String(length=32), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('availability',
     sa.Column('card_id', sa.Integer(), nullable=False),
-    sa.Column('region', sa.String(length=10), nullable=False),
+    sa.Column('region_id', sa.String(length=8), nullable=False),
     sa.ForeignKeyConstraint(['card_id'], ['card.id'], ),
-    sa.PrimaryKeyConstraint('card_id', 'region')
+    sa.ForeignKeyConstraint(['region_id'], ['region.id'], ),
+    sa.PrimaryKeyConstraint('card_id', 'region_id')
     )
     ### end Alembic commands ###
 
@@ -89,4 +95,5 @@ def downgrade():
     op.drop_table('attribute')
     op.drop_table('appeal')
     op.drop_table('rarity')
+    op.drop_table('region')
     ### end Alembic commands ###

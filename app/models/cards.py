@@ -2,6 +2,12 @@
 from app.models import db
 
 
+availability = db.Table('availability',
+	db.Column('card_id', db.Integer, db.ForeignKey('card.id'), primary_key=True),
+	db.Column('region_id', db.Integer, db.ForeignKey('region.id'), primary_key=True)
+)
+
+
 # Card container
 class Card(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=False)
@@ -12,24 +18,26 @@ class Card(db.Model):
 		uselist=False,
 		foreign_keys=[normal_state_id],
 		lazy='joined',
-		cascade='all')
+		cascade='all, delete-orphan',
+		single_parent=True)
 
 	idolised_state_id = db.Column(db.Integer, db.ForeignKey('state.id'))
 	idolised_state = db.relationship('State',
 		uselist=False,
 		foreign_keys=[idolised_state_id],
 		lazy='joined',
-		cascade='all')
+		cascade='all, delete-orphan',
+		single_parent=True)
 
 	attribute_id = db.Column(db.Integer, db.ForeignKey('attribute.id'))
 
 	skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
 	appeal_id = db.Column(db.Integer, db.ForeignKey('appeal.id'))
 
-	availability = db.relationship('Availability',
+	availability = db.relationship('Region',
+		secondary=availability,
 		backref='cards',
-		lazy='dynamic',
-		cascade='all')
+		lazy='dynamic')
 
 
 # Card data that differs depending on idolised status
@@ -115,7 +123,10 @@ class Appeal(db.Model):
 		return self.name
 
 
-# Availability of a card across the various regional versions
-class Availability(db.Model):
-	card_id = db.Column(db.Integer, db.ForeignKey('card.id'), primary_key=True)
-	region = db.Column(db.String(10), primary_key=True)
+# ohgodtheykeepreleasingnewregions
+class Region(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(32))
+
+	def __repr__(self):
+		return self.name

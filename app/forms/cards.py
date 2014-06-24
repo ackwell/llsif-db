@@ -3,7 +3,7 @@ from flask.ext.wtf import Form
 from app import models
 from urlparse import urlparse
 from wtforms.fields import IntegerField, StringField, FormField
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import Optional, InputRequired, ValidationError
 
 def external_url(form, field):
@@ -37,3 +37,6 @@ class Card(Form):
 		query_factory=lambda: models.Skill.query.all())
 	appeal = QuerySelectField('Appeal',
 		query_factory=lambda: models.Appeal.query.all())
+
+	availability = QuerySelectMultipleField('Availability',
+		query_factory=lambda: models.Region.query.all())
