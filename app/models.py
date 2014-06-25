@@ -4,10 +4,13 @@ from flask.ext.sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)
 
 
-availability = db.Table('availability',
-	db.Column('card_id', db.Integer, db.ForeignKey('card.id'), primary_key=True),
-	db.Column('region_id', db.Integer, db.ForeignKey('region.id'), primary_key=True)
-)
+db.Model.metadata = db.MetaData(naming_convention={
+	"ix": 'ix_%(column_0_label)s',
+	"uq": "uq_%(table_name)s_%(column_0_name)s",
+	"ck": "ck_%(table_name)s_%(constraint_name)s",
+	"fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+	"pk": "pk_%(table_name)s"
+})
 
 
 # Card container
@@ -31,13 +34,13 @@ class Card(db.Model):
 		cascade='all, delete-orphan',
 		single_parent=True)
 
-	attribute_id = db.Column(db.Integer, db.ForeignKey('attribute.id'))
+	attribute = db.Column(db.String(8))
 
 	skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
 	appeal_id = db.Column(db.Integer, db.ForeignKey('appeal.id'))
 
 	availability = db.relationship('Region',
-		secondary=availability,
+		secondary='availability',
 		backref='cards',
 		lazy='dynamic')
 
@@ -73,23 +76,6 @@ class Rarity(db.Model):
 		return self.name
 
 
-# Attribute of card (Smile / Pure / Cool)
-class Attribute(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(10))
-
-	cards = db.relationship('Card',
-		backref='attribute',
-		lazy='dynamic')
-
-	skills = db.relationship('Skill',
-		backref='attribute',
-		lazy='dynamic')
-
-	def __repr__(self):
-		return self.name
-
-
 # Card's centre skills
 class Skill(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -101,8 +87,9 @@ class Skill(db.Model):
 
 	description = db.Column(db.Text)
 
-	attribute_id = db.Column(db.Integer, db.ForeignKey('attribute.id'))
-	bonus = db.Column(db.Integer)
+	bonus_attribute = db.Column(db.String(8))
+	scale_attribute = db.Column(db.String(8))
+	scale = db.Column(db.Float)
 
 	def __repr__(self):
 		return self.name
@@ -125,9 +112,16 @@ class Appeal(db.Model):
 		return self.name
 
 
+# Card <--> Region join table
+availability = db.Table('availability',
+	db.Column('card_id', db.Integer, db.ForeignKey('card.id'), primary_key=True),
+	db.Column('region_id', db.String, db.ForeignKey('region.id'), primary_key=True)
+)
+
+
 # ohgodtheykeepreleasingnewregions
 class Region(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
+	id = db.Column(db.String, primary_key=True)
 	name = db.Column(db.String(32))
 
 	def __repr__(self):

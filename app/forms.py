@@ -2,7 +2,7 @@
 from flask.ext.wtf import Form
 from app import models
 from urlparse import urlparse
-from wtforms.fields import IntegerField, StringField, FormField
+from wtforms.fields import IntegerField, StringField, FormField, SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import Optional, InputRequired, ValidationError
 
@@ -25,8 +25,9 @@ class Card(Form):
 	id = IntegerField('ID', [InputRequired()])
 	name = StringField('Name')
 
-	attribute = QuerySelectField('Attribute',
-		query_factory=lambda: models.Attribute.query.all())
+	attribute = SelectField('Attribute',
+		choices=[('smile', 'Smile'), ('pure', 'Pure'), ('cool', 'Cool')])
+
 	rarity = QuerySelectField('Rarity',
 		query_factory=lambda: models.Rarity.query.filter(models.Rarity.id%2 == 1).all())
 
