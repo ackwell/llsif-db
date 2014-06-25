@@ -1,5 +1,7 @@
 
-from app.models import db
+from app import app
+from flask.ext.sqlalchemy import SQLAlchemy
+db = SQLAlchemy(app)
 
 
 availability = db.Table('availability',
