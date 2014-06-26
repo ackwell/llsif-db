@@ -106,7 +106,12 @@ class Appeal(db.Model):
 
 	description = db.Column(db.Text)
 
-	type = db.Column(db.String(32))
+	award = db.Column(db.String(32))
+	award_modifier = db.Column(db.Integer)
+
+	proc_statistic = db.Column(db.String(16))
+	proc_count = db.Column(db.Integer)
+	proc_chance = db.Column(db.Float)
 
 	def __repr__(self):
 		return self.name
