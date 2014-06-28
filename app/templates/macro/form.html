@@ -1,10 +1,11 @@
 
-{% macro field(field, prefix='', suffix='', class='') -%}
+{% macro field(field, prefix='', suffix='', class='', disabled=False) -%}
 	<div class="form-group {% if field.errors %}has-error{% endif %}">
 		{{ field.label(class='control-label') }}
 		{% if prefix or suffix %}<div class="input-group">{% endif %}
 		{% if prefix %}<span class="input-group-addon prefix">{{ prefix }}</span>{% endif %}
-		{{ field(class='form-control ' + class) }}
+		{% set class = 'form-control ' + class %}
+		{% if disabled %}{{ field(class=class, disabled=True) }}{% else %}{{ field(class=class) }}{% endif %}
 		{% if suffix %}<span class="input-group-addon suffix">{{ suffix }}</span>{% endif %}
 		{% if prefix or suffix %}</div>{% endif %}
 	</div>
