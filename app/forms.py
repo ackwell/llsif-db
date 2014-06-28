@@ -65,6 +65,6 @@ class Appeal(Form):
 	effect_modifier = IntegerField('Effect Modifier')
 
 	proc_statistic = SelectField('Proc Statistic',
-		choices=[ ('seconds', 'Seconds'), ('notes', 'Notes'), ('combo', 'Combo'), ('perfects', 'Perfects')])
+		choices=[ ('seconds', 'Seconds'), ('notes', 'Notes'), ('combo', 'Combo'), ('perfects', 'Perfects'), ('score', 'Score')])
 	proc_count = IntegerField('Proc Count')
 	proc_chance = IntegerField('Proc Chance', [NumberRange(0, 100)])
