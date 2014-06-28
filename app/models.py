@@ -1,7 +1,7 @@
 
-from app import app
+from flask import current_app
 from flask.ext.sqlalchemy import SQLAlchemy
-db = SQLAlchemy(app)
+db = SQLAlchemy(current_app)
 
 
 db.Model.metadata = db.MetaData(naming_convention={

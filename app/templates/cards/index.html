@@ -42,7 +42,7 @@
 			<tr>
 				<td>{{ card.id }}</td>
 				<td>{{ card.name }}</td>
-				<td>{{ card.attribute.name }}</td>
+				<td>{{ card.attribute|capitalize }}</td>
 				<td>{{ card.normal_state.rarity.name }}</td>
 				<td>{{ card.normal_state.hp }}</td>
 				<td>{{ card.normal_state.smile }}</td>

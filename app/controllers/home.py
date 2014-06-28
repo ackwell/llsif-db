@@ -1,6 +1,5 @@
 
-from flask import Blueprint, render_template
-from app import app
+from flask import Blueprint, render_template, current_app
 
 controller = Blueprint('home', __name__)
 
@@ -8,4 +7,4 @@ controller = Blueprint('home', __name__)
 def index():
 	return render_template('home/index.html')
 
-app.register_blueprint(controller)
+current_app.register_blueprint(controller)

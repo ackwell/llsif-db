@@ -1,6 +1,6 @@
 
-from flask import Blueprint, render_template, redirect, url_for
-from app import app, models, forms
+from flask import Blueprint, render_template, redirect, url_for, current_app
+from app import models, forms
 from sqlalchemy.exc import IntegrityError
 
 controller = Blueprint('cards', __name__)
@@ -56,4 +56,4 @@ def delete(card):
 	models.db.session.commit()
 	return redirect(url_for('cards.index'))
 
-app.register_blueprint(controller, url_prefix='/cards')
+current_app.register_blueprint(controller, url_prefix='/cards')

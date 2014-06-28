@@ -15,4 +15,5 @@ def context_processor():
 
 	return context
 
-from . import controllers, models
+with app.app_context():
+	from . import controllers, models
