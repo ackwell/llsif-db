@@ -53,7 +53,7 @@ class Skill(Form):
 
 	bonus_attribute = SelectField('Bonus Attribute', choices=attributes)
 	scale_attribute = SelectField('Scale Attribute', choices=attributes)
-	scale = IntegerField('Scale', [InputRequired()])
+	scale = IntegerField('Scale', [InputRequired(), NumberRange(0, 100)])
 
 
 class Appeal(Form):
