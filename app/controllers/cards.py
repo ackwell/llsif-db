@@ -26,6 +26,9 @@ def form(card=None):
 		# Populate
 		if card is None:
 			card = models.Card()
+			card.normal_state = models.State()
+			card.idolised_state = models.State()
+
 		form.populate_obj(card)
 
 		# Set the state rarities
