@@ -3,4 +3,4 @@ venv
 Vagrantfile
 *.sublime-*
 *.pyc
-app/static/img/idols
+notes.txt
