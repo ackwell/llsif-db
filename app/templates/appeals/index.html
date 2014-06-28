@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Appeals</h1>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th colspan="2"></th>
+			<th colspan="2">Effect</th>
+			<th colspan="3">Proc</th>
+			<th></th>
+		</tr>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Type</th>
+			<th>Modifier</th>
+			<th>Statistic</th>
+			<th>Count</th>
+			<th>Chance</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="15">
+				<a href="{{ url_for('appeals.create') }}" class="btn btn-success btn-sm">
+					<span class="glyphicon glyphicon-plus"></span> Add new appeal
+				</a>
+			</td>
+		</tr>
+	</tfoot>
+	<tbody>
+		{% for appeal in appeals %}
+			<tr>
+				<td>{{ appeal.name }}</td>
+				<td>{{ appeal.description or '' }}</td>
+				<td>{{ (appeal.effect or '')|capitalize }}</td>
+				<td>{{ appeal.effect_modifier or '' }}</td>
+				<td>{{ (appeal.proc_statistic or '')|capitalize }}</td>
+				<td>{{ appeal.proc_count or '' }}</td>
+				<td>{{ appeal.proc_chance or ''}}{% if appeal.proc_chance %}%{% endif %}</td>
+				<td>
+					<div class="btn-group">
+						<a href="{{ url_for('appeals.edit', appeal=appeal.id) }}" class="btn btn-info btn-xs">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+						<a href="{{ url_for('appeals.delete', appeal=appeal.id) }}" class="btn btn-danger btn-xs">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
