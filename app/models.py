@@ -89,7 +89,7 @@ class Skill(db.Model):
 
 	bonus_attribute = db.Column(db.String(8))
 	scale_attribute = db.Column(db.String(8))
-	scale = db.Column(db.Float)
+	scale = db.Column(db.Integer)
 
 	def __repr__(self):
 		return self.name
@@ -106,12 +106,12 @@ class Appeal(db.Model):
 
 	description = db.Column(db.Text)
 
-	award = db.Column(db.String(32))
-	award_modifier = db.Column(db.Integer)
+	effect = db.Column(db.String(32))
+	effect_modifier = db.Column(db.Integer)
 
 	proc_statistic = db.Column(db.String(16))
 	proc_count = db.Column(db.Integer)
-	proc_chance = db.Column(db.Float)
+	proc_chance = db.Column(db.Integer)
 
 	def __repr__(self):
 		return self.name

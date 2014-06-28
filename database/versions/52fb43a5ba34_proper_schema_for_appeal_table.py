@@ -15,16 +15,16 @@ import sqlalchemy as sa
 
 
 def upgrade():
-    op.alter_column('appeal', 'type', new_column_name='award', existing_type=sa.String(32))
-    op.add_column('appeal', sa.Column('award_modifier', sa.Integer()))
+    op.alter_column('appeal', 'type', new_column_name='effect', existing_type=sa.String(32))
+    op.add_column('appeal', sa.Column('effect_modifier', sa.Integer()))
     op.add_column('appeal', sa.Column('proc_statistic', sa.String(16)))
     op.add_column('appeal', sa.Column('proc_count', sa.Integer()))
     op.add_column('appeal', sa.Column('proc_chance', sa.Float()))
 
 
 def downgrade():
-    op.alter_column('appeal', 'award', new_column_name='type', existing_type=sa.String(32))
-    op.drop_column('appeal', 'award_modifier')
+    op.alter_column('appeal', 'effect', new_column_name='type', existing_type=sa.String(32))
+    op.drop_column('appeal', 'effect_modifier')
     op.drop_column('appeal', 'proc_statistic')
     op.drop_column('appeal', 'proc_count')
     op.drop_column('appeal', 'proc_chance')

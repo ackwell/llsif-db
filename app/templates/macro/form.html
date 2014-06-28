@@ -1,7 +1,34 @@
 
-{% macro field(field) -%}
+{% macro field(field, prefix='', suffix='', class='') -%}
 	<div class="form-group {% if field.errors %}has-error{% endif %}">
 		{{ field.label(class='control-label') }}
-		{{ field(class='form-control') }}
+		{% if prefix or suffix %}<div class="input-group">{% endif %}
+		{% if prefix %}<span class="input-group-addon prefix">{{ prefix }}</span>{% endif %}
+		{{ field(class='form-control ' + class) }}
+		{% if suffix %}<span class="input-group-addon suffix">{{ suffix }}</span>{% endif %}
+		{% if prefix or suffix %}</div>{% endif %}
 	</div>
+{%- endmacro %}
+
+{% macro errors(form) -%}
+	{% if form.errors %}
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{% for name, errors in form.errors.iteritems() %}
+				<p>
+				<strong>{{ name|capitalize }}:</strong>
+				{% if errors|length == 1 %}
+					{{ errors[0] }}
+					</p>
+				{% else %}
+					</p>
+					<ul>
+						{% for error in errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endif %}
 {%- endmacro %}

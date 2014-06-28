@@ -23,7 +23,7 @@ class State(Form):
 
 class Card(Form):
 	id = IntegerField('ID', [InputRequired()])
-	name = StringField('Name')
+	name = StringField('Name', [InputRequired()])
 
 	attribute = SelectField('Attribute',
 		choices=[('smile', 'Smile'), ('pure', 'Pure'), ('cool', 'Cool')])
@@ -41,3 +41,17 @@ class Card(Form):
 
 	availability = QuerySelectMultipleField('Availability',
 		query_factory=lambda: models.Region.query.all())
+
+
+class Appeal(Form):
+	name = StringField('Name', [InputRequired()])
+	description = StringField('Description')
+
+	effect = SelectField('Effect',
+		choices=[('score', 'Score Boost'), ('health', 'Health Regen'), ('perfect', 'Perfect Lock')])
+	effect_modifier = IntegerField('Effect Modifier')
+
+	proc_statistic = SelectField('Proc Statistic',
+		choices=[ ('seconds', 'Seconds'), ('notes', 'Notes'), ('combo', 'Combo'), ('perfects', 'Perfects')])
+	proc_count = IntegerField('Proc Count')
+	proc_chance = IntegerField('Proc Chance')
