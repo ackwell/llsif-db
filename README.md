@@ -14,7 +14,7 @@ A card database for the LoveLive: School Idol Festival mobile game.
 	- Flask
 	- SQLAlchemy
 	- WTForms
-	- (varios bindings between the above)
+	- (various bindings between the above)
 - MySQL (I use MariaDB 10, though any MySQL distribution should work)
 - No client side framework (though I do like the look of angular, if one is needed)
 
