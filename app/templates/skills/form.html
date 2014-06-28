@@ -2,7 +2,7 @@
 {% import 'macro/form.html' as f %}
 
 {% block content %}
-<h1>{{ mode|capitalize }} Appeal</h1>
+<h1>{{ mode|capitalize }} Skill</h1>
 <form action="" method="post" role="form">
 	{{ form.hidden_tag() }}
 
@@ -16,11 +16,9 @@
 
 	{# Effect #}
 	<div class="row">
-		<div class="col-md-2">{{ f.field(form.effect, class='appeal-effect') }}</div>
-		<div class="col-md-2 appeal-effect-modifier">{{ f.field(form.effect_modifier, suffix=effect_suffix) }}</div>
-		<div class="col-md-2 col-md-offset-2">{{ f.field(form.proc_statistic) }}</div>
-		<div class="col-md-2">{{ f.field(form.proc_count) }}</div>
-		<div class="col-md-2">{{ f.field(form.proc_chance, suffix='%') }}</div>
+		<div class="col-md-2">{{ f.field(form.bonus_attribute) }}</div>
+		<div class="col-md-2 col-md-offset-2">{{ f.field(form.scale_attribute) }}</div>
+		<div class="col-md-2">{{ f.field(form.scale, suffix='%') }}</div>
 	</div>
 
 	{# Submit #}

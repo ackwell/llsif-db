@@ -1,2 +1,2 @@
 
-from . import home, cards, appeals
+from . import home, cards, appeals, skills
