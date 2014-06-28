@@ -4,7 +4,7 @@ from app import models
 from urlparse import urlparse
 from wtforms.fields import IntegerField, StringField, FormField, SelectField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
-from wtforms.validators import Optional, InputRequired, ValidationError
+from wtforms.validators import Optional, InputRequired, NumberRange, ValidationError
 
 def external_url(form, field):
 	url = urlparse(field.data)
@@ -54,4 +54,4 @@ class Appeal(Form):
 	proc_statistic = SelectField('Proc Statistic',
 		choices=[ ('seconds', 'Seconds'), ('notes', 'Notes'), ('combo', 'Combo'), ('perfects', 'Perfects')])
 	proc_count = IntegerField('Proc Count')
-	proc_chance = IntegerField('Proc Chance')
+	proc_chance = IntegerField('Proc Chance', [NumberRange(0, 100)])

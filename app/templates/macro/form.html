@@ -16,7 +16,7 @@
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			{% for name, errors in form.errors.iteritems() %}
 				<p>
-				<strong>{{ name|capitalize }}:</strong>
+				<strong>{{ name|replace('_', ' ')|title }}:</strong>
 				{% if errors|length == 1 %}
 					{{ errors[0] }}
 					</p>
