@@ -16,6 +16,9 @@ $(function() {
 	// Potentially loaded via ajax, need to hook all events
 	$(document).on('change', '.appeal-effect', updateAppealEffectSuffix);
 
-	// Use select2 for large select fields
-	$('.select2').select2();
+	// Use select2 for select fields
+	$('select').select2({
+		closeOnSelect: false,
+		minimumResultsForSearch: 10
+	});
 });

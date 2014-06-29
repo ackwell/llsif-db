@@ -35,19 +35,9 @@
 	{# Skills #}
 	<div class="row">
 		<div class="col-md-4">{{ f.field(form.skill) }}</div>
-		<div class="col-md-2">
-			<label>&nbsp;</label>
-			<a href="#" class="btn btn-default btn-block">Add new skill</a>
-		</div>
-		<div class="col-md-4">{{ f.field(form.appeal, class='select2') }}</div>
-		<div class="col-md-2"><div class="form-group">
-			<label>&nbsp;</label>
-			<a href="#" class="btn btn-default btn-block">Add new appeal</a>
-		</div></div>
+		<div class="col-md-4">{{ f.field(form.appeal) }}</div>
+		<div class="col-md-4">{{ f.field(form.availability) }}</div>
 	</div>
-
-	{# No idea where I shold put this #}
-	{{ f.field(form.availability) }}
 
 	{# Submit #}
 	<button type="submit" class="btn btn-primary">
