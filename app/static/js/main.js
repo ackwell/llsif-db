@@ -21,4 +21,10 @@ $(function() {
 		closeOnSelect: false,
 		minimumResultsForSearch: 10
 	});
+
+	// Tablesorter
+	$('table.sortable').tablesorter({
+		cssAsc: 'header-sort-up',
+		cssDesc: 'header-sort-down'
+	});
 });
