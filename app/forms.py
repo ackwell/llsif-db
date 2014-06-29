@@ -2,7 +2,7 @@
 from flask.ext.wtf import Form
 from app import models
 from urlparse import urlparse
-from wtforms.fields import IntegerField, StringField, FormField, SelectField
+from wtforms.fields import IntegerField, StringField, FormField, SelectField, DecimalField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import Optional, InputRequired, NumberRange, ValidationError
 
@@ -62,7 +62,7 @@ class Appeal(Form):
 
 	effect = SelectField('Effect',
 		choices=[('score', 'Score Boost'), ('health', 'Health Regen'), ('perfect', 'Perfect Lock')])
-	effect_modifier = IntegerField('Effect Modifier')
+	effect_modifier = DecimalField('Effect Modifier')
 
 	proc_statistic = SelectField('Proc Statistic',
 		choices=[ ('seconds', 'Seconds'), ('notes', 'Notes'), ('combo', 'Combo'), ('perfects', 'Perfects'), ('score', 'Score')])

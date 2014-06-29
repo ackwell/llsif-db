@@ -107,7 +107,7 @@ class Appeal(db.Model):
 	description = db.Column(db.Text)
 
 	effect = db.Column(db.String(32))
-	effect_modifier = db.Column(db.Integer)
+	effect_modifier = db.Column(db.Float)
 
 	proc_statistic = db.Column(db.String(16))
 	proc_count = db.Column(db.Integer)
