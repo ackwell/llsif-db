@@ -24,7 +24,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="15">
-				<a href="{{ url_for('appeals.create') }}" class="btn btn-success btn-sm">
+				<a href="{{ url_for('cards.appeals_create') }}" class="btn btn-success btn-sm">
 					<span class="glyphicon glyphicon-plus"></span> Add new appeal
 				</a>
 			</td>
@@ -42,10 +42,10 @@
 				<td>{{ appeal.proc_chance or ''}}{% if appeal.proc_chance %}%{% endif %}</td>
 				<td>
 					<div class="btn-group">
-						<a href="{{ url_for('appeals.edit', appeal=appeal.id) }}" class="btn btn-info btn-xs">
+						<a href="{{ url_for('cards.appeals_edit', appeal=appeal.id) }}" class="btn btn-info btn-xs">
 							<span class="glyphicon glyphicon-edit"></span>
 						</a>
-						<a href="{{ url_for('appeals.delete', appeal=appeal.id) }}" class="btn btn-danger btn-xs">
+						<a href="{{ url_for('cards.appeals_delete', appeal=appeal.id) }}" class="btn btn-danger btn-xs">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>
 					</div>

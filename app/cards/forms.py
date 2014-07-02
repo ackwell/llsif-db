@@ -1,10 +1,10 @@
 
 from flask.ext.wtf import Form
-from app import models
 from urlparse import urlparse
 from wtforms.fields import IntegerField, StringField, FormField, SelectField, DecimalField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import Optional, InputRequired, NumberRange, ValidationError
+from . import models
 
 # Stuff I reuse
 attributes = [('smile', 'Smile'), ('pure', 'Pure'), ('cool', 'Cool')]
