@@ -7,6 +7,7 @@ A card database for the LoveLive: School Idol Festival mobile game.
 - [ ] User accounts with opt-in listing in friend finder
 - [ ] 'Collection manager' thingy with best-team-for-song-X whatsit
 - [ ] Perhaps a random draw emulator?
+- [ ] Event / daily song tracker (per region)
 - [ ] Open to suggestions!
 
 **Current Stack:**
