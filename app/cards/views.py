@@ -1,5 +1,6 @@
 
 from flask import Blueprint, render_template, redirect, url_for
+from flask.ext.security import login_required
 from . import models, forms
 from sqlalchemy.exc import IntegrityError
 
@@ -17,6 +18,7 @@ def index():
 
 @blueprint.route('/create', methods=['GET', 'POST'], endpoint='create')
 @blueprint.route('/edit/<int:card>', methods=['GET', 'POST'], endpoint='edit')
+@login_required
 def form(card=None):
 	mode = 'new'
 	if card is not None:
@@ -57,6 +59,7 @@ def form(card=None):
 
 
 @blueprint.route('/delete/<int:card>')
+@login_required
 def delete(card):
 	card = models.Card.query.get(card)
 	models.db.session.delete(card)
@@ -75,6 +78,7 @@ def appeals_index():
 
 @blueprint.route('/appeals/create', methods=['GET', 'POST'], endpoint='appeals_create')
 @blueprint.route('/appeals/edit/<int:appeal>', methods=['GET', 'POST'], endpoint='appeals_edit')
+@login_required
 def appeals_form(appeal=None):
 	mode = 'new'
 	if appeal is not None:
@@ -107,6 +111,7 @@ def appeals_form(appeal=None):
 
 
 @blueprint.route('/appeals/delete/<int:appeal>')
+@login_required
 def appeals_delete(appeal):
 	appeal = models.Appeal.query.get(appeal)
 	models.db.session.delete(appeal)
@@ -125,6 +130,7 @@ def skills_index():
 
 @blueprint.route('/skills/create', methods=['GET', 'POST'], endpoint='skills_create')
 @blueprint.route('/skills/edit/<int:skill>', methods=['GET', 'POST'], endpoint='skills_edit')
+@login_required
 def skills_form(skill=None):
 	mode = 'new'
 	if skill is not None:
@@ -149,6 +155,7 @@ def skills_form(skill=None):
 
 
 @blueprint.route('/skills/delete/<int:skill>')
+@login_required
 def skills_delete(skill):
 	skill = models.Skill.query.get(skill)
 	models.db.session.delete(skill)
