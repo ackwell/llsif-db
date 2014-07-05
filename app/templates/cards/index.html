@@ -1,7 +1,9 @@
 {% extends "base.html" %}
+{% import 'macro/form.html' as f %}
 
 {% block content %}
 <h1>Cards</h1>
+
 <table class="table table-bordered sortable">
 	<thead>
 		<tr>
@@ -56,14 +58,10 @@
 				<td>{{ card.skill.name }}</td>
 				{% if logged_in %}
 					<td>
-						<div class="btn-group">
-							<a href="{{ url_for('cards.edit', card=card.id) }}" class="btn btn-info btn-xs">
-								<span class="glyphicon glyphicon-edit"></span>
-							</a>
-							<a href="{{ url_for('cards.delete', card=card.id) }}" class="btn btn-danger btn-xs">
-								<span class="glyphicon glyphicon-trash"></span>
-							</a>
-						</div>
+						<a href="{{ url_for('cards.edit', card=card.id) }}" class="btn btn-info btn-xs">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+						{{ f.delete_button(delete_form(), url_for('cards.delete', card=card.id)) }}
 					</td>
 				{% endif %}
 			</tr>

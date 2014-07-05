@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask.ext.security import login_required
 from . import models, forms
 from sqlalchemy.exc import IntegrityError
+from ..util import DeleteForm
 
 blueprint = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -58,12 +59,16 @@ def form(card=None):
 		mode=mode)
 
 
-@blueprint.route('/delete/<int:card>')
+@blueprint.route('/delete/<int:card>', methods=['POST'])
 @login_required
 def delete(card):
-	card = models.Card.query.get(card)
-	models.db.session.delete(card)
-	models.db.session.commit()
+	form = DeleteForm()
+
+	if form.validate_on_submit():
+		card = models.Card.query.get(card)
+		models.db.session.delete(card)
+		models.db.session.commit()
+
 	return redirect(url_for('cards.index'))
 
 ######
@@ -72,7 +77,7 @@ def delete(card):
 
 @blueprint.route('/appeals/')
 def appeals_index():
-	return render_template('appeals/index.html',
+	return render_template('cards/appeals/index.html',
 		appeals=models.Appeal.query.all())
 
 
@@ -104,18 +109,22 @@ def appeals_form(appeal=None):
 		'perfect': 'seconds'
 	}[form.effect.data];
 
-	return render_template('appeals/form.html',
+	return render_template('cards/appeals/form.html',
 		form=form,
 		mode=mode,
 		effect_suffix=effect_suffix)
 
 
-@blueprint.route('/appeals/delete/<int:appeal>')
+@blueprint.route('/appeals/delete/<int:appeal>', methods=['POST'])
 @login_required
 def appeals_delete(appeal):
-	appeal = models.Appeal.query.get(appeal)
-	models.db.session.delete(appeal)
-	models.db.session.commit()
+	form = DeleteForm()
+
+	if form.validate_on_submit():
+		appeal = models.Appeal.query.get(appeal)
+		models.db.session.delete(appeal)
+		models.db.session.commit()
+
 	return redirect(url_for('cards.appeals_index'))
 
 ######
@@ -124,7 +133,7 @@ def appeals_delete(appeal):
 
 @blueprint.route('/skills/')
 def skills_index():
-	return render_template('skills/index.html',
+	return render_template('cards/skills/index.html',
 		skills=models.Skill.query.all())
 
 
@@ -149,15 +158,19 @@ def skills_form(skill=None):
 
 		return redirect(url_for('cards.skills_index'))
 
-	return render_template('skills/form.html',
+	return render_template('cards/skills/form.html',
 		form=form,
 		mode=mode)
 
 
-@blueprint.route('/skills/delete/<int:skill>')
+@blueprint.route('/skills/delete/<int:skill>', methods=['POST'])
 @login_required
 def skills_delete(skill):
-	skill = models.Skill.query.get(skill)
-	models.db.session.delete(skill)
-	models.db.session.commit()
+	form = DeleteForm()
+
+	if form.validate_on_submit():
+		skill = models.Skill.query.get(skill)
+		models.db.session.delete(skill)
+		models.db.session.commit()
+
 	return redirect(url_for('cards.skills_index'))

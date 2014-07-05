@@ -40,3 +40,10 @@
 		</div>
 	{% endif %}
 {%- endmacro %}
+
+{% macro delete_button(form, url) %}
+	<form action="{{ url }}" method="post" role="form">
+		{{ form.hidden_tag() }}
+		{{ form.submit(class='btn btn-danger btn-xs', label='<span class="glyphicon glyphicon-trash"></span>') }}
+	</form>
+{% endmacro %}

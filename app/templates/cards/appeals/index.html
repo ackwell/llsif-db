@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import 'macro/form.html' as f %}
 
 {% block content %}
 <h1>Appeals</h1>
@@ -42,14 +43,10 @@
 				<td>{{ appeal.proc_chance or ''}}{% if appeal.proc_chance %}%{% endif %}</td>
 				{% if logged_in %}
 					<td>
-						<div class="btn-group">
-							<a href="{{ url_for('cards.appeals_edit', appeal=appeal.id) }}" class="btn btn-info btn-xs">
-								<span class="glyphicon glyphicon-edit"></span>
-							</a>
-							<a href="{{ url_for('cards.appeals_delete', appeal=appeal.id) }}" class="btn btn-danger btn-xs">
-								<span class="glyphicon glyphicon-trash"></span>
-							</a>
-						</div>
+						<a href="{{ url_for('cards.appeals_edit', appeal=appeal.id) }}" class="btn btn-info btn-xs">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+						{{ f.delete_button(delete_form(), url_for('cards.appeals_delete', appeal=appeal.id)) }}
 					</td>
 				{% endif %}
 			</tr>
