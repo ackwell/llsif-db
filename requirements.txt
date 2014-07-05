@@ -4,3 +4,4 @@ Flask-WTF==0.9.5
 MySQL-python==1.2.5
 alembic==0.6.5
 Flask-Security==1.7.3
+py-bcrypt==0.4
