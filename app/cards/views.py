@@ -1,9 +1,10 @@
 
 from flask import Blueprint, render_template, redirect, url_for
-from flask.ext.security import login_required
+from flask.ext.security import login_required, current_user
 from . import models, forms
 from sqlalchemy.exc import IntegrityError
 from ..util import DeleteForm
+from ..users import ActionLog
 
 blueprint = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -52,6 +53,12 @@ def form(card=None):
 			form.id.errors.append('The specified ID already exists.')
 			models.db.session.rollback()
 		else:
+			log = ActionLog(
+				user=current_user,
+				action='card.%s(%s)'%(mode, card.id))
+			models.db.session.add(log)
+			models.db.session.commit()
+
 			return redirect(url_for('cards.index'))
 
 	return render_template('cards/form.html',
@@ -67,6 +74,12 @@ def delete(card):
 	if form.validate_on_submit():
 		card = models.Card.query.get(card)
 		models.db.session.delete(card)
+		models.db.session.commit()
+
+		log = ActionLog(
+			user=current_user,
+			action='card.delete(%s)'%(card.id))
+		models.db.session.add(log)
 		models.db.session.commit()
 
 	return redirect(url_for('cards.index'))
@@ -100,14 +113,19 @@ def appeals_form(appeal=None):
 		models.db.session.add(appeal)
 		models.db.session.commit()
 
+		log = ActionLog(
+			user=current_user,
+			action='card.appeal.%s(%s)'%(mode, appeal.id))
+		models.db.session.add(log)
+		models.db.session.commit()
+
 		return redirect(url_for('cards.appeals_index'))
 
 	effect_suffix = {
-		'None': 'points', # Form defaults to score
 		'score': 'points',
 		'health': 'HP',
 		'perfect': 'seconds'
-	}[form.effect.data];
+	}.get(form.effect.data)
 
 	return render_template('cards/appeals/form.html',
 		form=form,
@@ -123,6 +141,12 @@ def appeals_delete(appeal):
 	if form.validate_on_submit():
 		appeal = models.Appeal.query.get(appeal)
 		models.db.session.delete(appeal)
+		models.db.session.commit()
+
+		log = ActionLog(
+			user=current_user,
+			action='card.appeal.delete(%s)'%(appeal.id))
+		models.db.session.add(log)
 		models.db.session.commit()
 
 	return redirect(url_for('cards.appeals_index'))
@@ -156,6 +180,12 @@ def skills_form(skill=None):
 		models.db.session.add(skill)
 		models.db.session.commit()
 
+		log = ActionLog(
+			user=current_user,
+			action='card.skill.%s(%s)'%(mode, skill.id))
+		models.db.session.add(log)
+		models.db.session.commit()
+
 		return redirect(url_for('cards.skills_index'))
 
 	return render_template('cards/skills/form.html',
@@ -171,6 +201,12 @@ def skills_delete(skill):
 	if form.validate_on_submit():
 		skill = models.Skill.query.get(skill)
 		models.db.session.delete(skill)
+		models.db.session.commit()
+
+		log = ActionLog(
+			user=current_user,
+			action='card.skill.delete(%s)'%(skill.id))
+		models.db.session.add(log)
 		models.db.session.commit()
 
 	return redirect(url_for('cards.skills_index'))

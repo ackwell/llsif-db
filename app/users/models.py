@@ -1,6 +1,7 @@
 
 from ..extensions import db
 from flask.ext.security import UserMixin, RoleMixin, SQLAlchemyUserDatastore
+from datetime import datetime
 
 user_roles = db.Table('user_roles',
 	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
@@ -28,9 +29,21 @@ class User(db.Model, UserMixin):
 		secondary=user_roles,
 		backref=db.backref('users', lazy='dynamic'))
 
+	actions = db.relationship('ActionLog',
+		lazy='dynamic',
+		backref='user')
+
 class Role(db.Model, RoleMixin):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(80), unique=True)
 	description = db.Column(db.String(255))
 
 security_datastore = SQLAlchemyUserDatastore(db, User, Role)
+
+
+# I don't trust anyone.
+class ActionLog(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	action = db.Column(db.String(255))
+	time = db.Column(db.DateTime, default=datetime.today)
