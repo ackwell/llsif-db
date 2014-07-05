@@ -18,8 +18,8 @@ fileConfig(config.config_file_name)
 import os, sys
 root_path = os.path.abspath('.')
 sys.path.append(os.path.join(root_path))
-from app import models
-target_metadata = models.db.Model.metadata
+from app.extensions import db
+target_metadata = db.Model.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

@@ -5,3 +5,4 @@ Vagrantfile
 *.pyc
 notes.txt
 backups
+instance

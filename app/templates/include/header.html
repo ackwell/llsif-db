@@ -16,6 +16,15 @@
 				<li><a href="{{ url_for('cards.appeals_index') }}">Appeals</a></li>
 				<li><a href="{{ url_for('cards.skills_index') }}">Skills</a></li>
 			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				{% if logged_in %}
+					<li><a href="{{ url_for('security.logout') }}">Logout</a></li>
+				{% else %}
+					<li><a href="{{ url_for('security.login') }}">Login</a></li>
+					<li><a href="{{ url_for('security.register') }}">Register</a></li>
+				{% endif %}
+			</ul>
 		</div>
 	</div>
 </nav>
