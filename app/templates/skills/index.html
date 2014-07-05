@@ -10,12 +10,12 @@
 			<th>Bonus Attribute</th>
 			<th>Scale Attribute</th>
 			<th>Scale</th>
-			<th></th>
+			{% if logged_in %}<th></th>{% endif %}
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<td colspan="15">
+			<td colspan="{% if logged_in %}6{% else %}5{% endif %}">
 				<a href="{{ url_for('cards.skills_create') }}" class="btn btn-success btn-sm">
 					<span class="glyphicon glyphicon-plus"></span> Add new skill
 				</a>
@@ -30,16 +30,18 @@
 				<td>{{ (skill.bonus_attribute or '')|capitalize }}</td>
 				<td>{{ (skill.scale_attribute or '')|capitalize }}</td>
 				<td>{{ skill.scale or '' }}{% if skill.scale %}%{% endif %}</td>
-				<td>
-					<div class="btn-group">
-						<a href="{{ url_for('cards.skills_edit', skill=skill.id) }}" class="btn btn-info btn-xs">
-							<span class="glyphicon glyphicon-edit"></span>
-						</a>
-						<a href="{{ url_for('cards.skills_delete', skill=skill.id) }}" class="btn btn-danger btn-xs">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>
-					</div>
-				</td>
+				{% if logged_in %}
+					<td>
+						<div class="btn-group">
+							<a href="{{ url_for('cards.skills_edit', skill=skill.id) }}" class="btn btn-info btn-xs">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+							<a href="{{ url_for('cards.skills_delete', skill=skill.id) }}" class="btn btn-danger btn-xs">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</div>
+					</td>
+				{% endif %}
 			</tr>
 		{% endfor %}
 	</tbody>

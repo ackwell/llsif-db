@@ -8,7 +8,7 @@
 			<th colspan="2"></th>
 			<th colspan="2">Effect</th>
 			<th colspan="3">Proc</th>
-			<th></th>
+			{% if logged_in %}<th></th>{% endif %}
 		</tr>
 		<tr>
 			<th>Name</th>
@@ -18,12 +18,12 @@
 			<th>Statistic</th>
 			<th>Count</th>
 			<th>Chance</th>
-			<th></th>
+			{% if logged_in %}<th></th>{% endif %}
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<td colspan="15">
+			<td colspan="{% if logged_in %}8{% else %}7{% endif %}">
 				<a href="{{ url_for('cards.appeals_create') }}" class="btn btn-success btn-sm">
 					<span class="glyphicon glyphicon-plus"></span> Add new appeal
 				</a>
@@ -40,16 +40,18 @@
 				<td>{{ (appeal.proc_statistic or '')|capitalize }}</td>
 				<td>{{ appeal.proc_count or '' }}</td>
 				<td>{{ appeal.proc_chance or ''}}{% if appeal.proc_chance %}%{% endif %}</td>
-				<td>
-					<div class="btn-group">
-						<a href="{{ url_for('cards.appeals_edit', appeal=appeal.id) }}" class="btn btn-info btn-xs">
-							<span class="glyphicon glyphicon-edit"></span>
-						</a>
-						<a href="{{ url_for('cards.appeals_delete', appeal=appeal.id) }}" class="btn btn-danger btn-xs">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>
-					</div>
-				</td>
+				{% if logged_in %}
+					<td>
+						<div class="btn-group">
+							<a href="{{ url_for('cards.appeals_edit', appeal=appeal.id) }}" class="btn btn-info btn-xs">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+							<a href="{{ url_for('cards.appeals_delete', appeal=appeal.id) }}" class="btn btn-danger btn-xs">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</div>
+					</td>
+				{% endif %}
 			</tr>
 		{% endfor %}
 	</tbody>

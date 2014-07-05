@@ -8,7 +8,7 @@
 			<th colspan="4"></th>
 			<th colspan="4">Unidolised (max level)</th>
 			<th colspan="4">Idolised (max level)</th>
-			<th colspan="3"></th>
+			<th colspan="{% if logged_in %}3{% else %}2{% endif %}"></th>
 		</tr>
 		<tr>
 			<th>#</th>
@@ -25,12 +25,12 @@
 			<th>Cool</th>
 			<th>Appeal</th>
 			<th>Centre Skill</th>
-			<th></th>
+			{% if logged_in %}<th></th>{% endif %}
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<td colspan="15">
+			<td colspan="{% if logged_in %}15{% else %}14{% endif %}">
 				<a href="{{ url_for('cards.create') }}" class="btn btn-success btn-sm">
 					<span class="glyphicon glyphicon-plus"></span> Add new card
 				</a>
@@ -54,16 +54,18 @@
 				<td>{{ card.idolised_state.cool }}</td>
 				<td>{{ card.appeal.name }}</td>
 				<td>{{ card.skill.name }}</td>
-				<td>
-					<div class="btn-group">
-						<a href="{{ url_for('cards.edit', card=card.id) }}" class="btn btn-info btn-xs">
-							<span class="glyphicon glyphicon-edit"></span>
-						</a>
-						<a href="{{ url_for('cards.delete', card=card.id) }}" class="btn btn-danger btn-xs">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>
-					</div>
-				</td>
+				{% if logged_in %}
+					<td>
+						<div class="btn-group">
+							<a href="{{ url_for('cards.edit', card=card.id) }}" class="btn btn-info btn-xs">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+							<a href="{{ url_for('cards.delete', card=card.id) }}" class="btn btn-danger btn-xs">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</div>
+					</td>
+				{% endif %}
 			</tr>
 		{% endfor %}
 	</tbody>
