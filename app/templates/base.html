@@ -1,5 +1,4 @@
 {# Only include head and header if not rendering via ajax #}
-{% if not ajax %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,13 +14,22 @@
 	{% include 'include/header.html' %}
 
 	<div class="container">
-{% endif %}
+		{# Flash messages #}
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message in messages %}
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		
 		{% block content %}{% endblock %}
-{% if not ajax %}
 	</div>
 
 	{# Putting JS at bottom because >muh async #}
 	{% include 'include/js.html' %}
 </body>
 </html>
-{% endif %}
