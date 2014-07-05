@@ -26,6 +26,6 @@ def configure_blueprints(app):
 def configure_extensions(app):
 	db.init_app(app)
 
-	security.init_app(app, users.security_datastore)
+	security.init_app(app, users.security_datastore, **users.security_forms)
 
 	mail.init_app(app)
