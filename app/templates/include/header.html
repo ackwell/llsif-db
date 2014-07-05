@@ -12,9 +12,16 @@
 
 		<div class="collapse navbar-collapse" id="header-nav-collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="{{ url_for('cards.index') }}">Cards</a></li>
-				<li><a href="{{ url_for('cards.appeals_index') }}">Appeals</a></li>
-				<li><a href="{{ url_for('cards.skills_index') }}">Skills</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						Database <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="{{ url_for('cards.index') }}">Cards</a></li>
+						<li><a href="{{ url_for('cards.appeals_index') }}">Appeals</a></li>
+						<li><a href="{{ url_for('cards.skills_index') }}">Skills</a></li>
+					</ul>
+				</li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
