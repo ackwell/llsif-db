@@ -9,9 +9,10 @@
 	{{ f.errors(form) }}
 
 	<div class="row">
-		<div class="col-md-4">{{ f.field(form.region) }}</div>
+		<div class="col-md-3">{{ f.field(form.region) }}</div>
 		<div class="col-md-4">{{ f.field(form.name) }}</div>
 		<div class="col-md-4">{{ f.field(form.friend_code) }}</div>
+		<div class="col-md-1">{{ f.field(form.visible) }}</div>
 	</div>
 
 	{{ f.field(form.notes) }}

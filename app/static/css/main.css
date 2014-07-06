@@ -10,3 +10,8 @@ table .header-sort-up, table .header-sort-down {
 table .header-sort-up {
 	background-position: 100% -40px;
 }
+
+/* For rows in tables hidden to other users */
+.invisble {
+	color: #aaa;
+}

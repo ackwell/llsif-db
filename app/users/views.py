@@ -12,7 +12,7 @@ blueprint = Blueprint('accounts', __name__, url_prefix='/accounts')
 def index():
 	accounts = models.Account.query.filter(
 		(models.Account.visible == True) |
-		(models.Account.user == current_user)
+		((models.Account.user == current_user) if current_user.is_authenticated() else False)
 	).all()
 
 	return render_template('accounts/index.html',

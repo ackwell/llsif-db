@@ -28,7 +28,7 @@
 	{% endif %}
 	<tbody>
 		{% for account in accounts %}
-			<tr>
+			<tr{% if not account.visible %} class="invisble"{% endif %}>
 				<td>{{ account.user.id }}</td>
 				<td>{{ account.region.name }}</td>
 				<td>{{ account.name }}</td>
