@@ -5,6 +5,7 @@ from . import models, forms
 from sqlalchemy.exc import IntegrityError
 from ..util import DeleteForm
 from ..users import ActionLog
+from ..extensions import db
 
 blueprint = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -24,7 +25,7 @@ def index():
 def form(card=None):
 	mode = 'new'
 	if card is not None:
-		card = models.Card.query.get(card)
+		card = models.Card.query.get_or_404(card)
 		mode = 'edit'
 
 	form = forms.Card(obj=card)
@@ -46,18 +47,18 @@ def form(card=None):
 
 		# Save, catching ID duplicates
 		# (Not using a verifier, it'd double the SQL queries, and be a general PITA)
-		models.db.session.add(card)
+		db.session.add(card)
 		try:
-			models.db.session.commit()
+			db.session.commit()
 		except IntegrityError:
 			form.id.errors.append('The specified ID already exists.')
-			models.db.session.rollback()
+			db.session.rollback()
 		else:
 			log = ActionLog(
 				user=current_user,
 				action='card.%s(%s)'%(mode, card.id))
-			models.db.session.add(log)
-			models.db.session.commit()
+			db.session.add(log)
+			db.session.commit()
 
 			return redirect(url_for('cards.index'))
 
@@ -72,15 +73,15 @@ def delete(card):
 	form = DeleteForm()
 
 	if form.validate_on_submit():
-		card = models.Card.query.get(card)
-		models.db.session.delete(card)
-		models.db.session.commit()
+		card = models.Card.query.get_or_404(card)
+		db.session.delete(card)
+		db.session.commit()
 
 		log = ActionLog(
 			user=current_user,
 			action='card.delete(%s)'%(card.id))
-		models.db.session.add(log)
-		models.db.session.commit()
+		db.session.add(log)
+		db.session.commit()
 
 	return redirect(url_for('cards.index'))
 
@@ -100,7 +101,7 @@ def appeals_index():
 def appeals_form(appeal=None):
 	mode = 'new'
 	if appeal is not None:
-		appeal = models.Appeal.query.get(appeal)
+		appeal = models.Appeal.query.get_or_404(appeal)
 		mode = 'edit'
 
 	form = forms.Appeal(obj=appeal)
@@ -110,14 +111,14 @@ def appeals_form(appeal=None):
 			appeal = models.Appeal()
 		form.populate_obj(appeal)
 
-		models.db.session.add(appeal)
-		models.db.session.commit()
+		db.session.add(appeal)
+		db.session.commit()
 
 		log = ActionLog(
 			user=current_user,
 			action='card.appeal.%s(%s)'%(mode, appeal.id))
-		models.db.session.add(log)
-		models.db.session.commit()
+		db.session.add(log)
+		db.session.commit()
 
 		return redirect(url_for('cards.appeals_index'))
 
@@ -139,15 +140,15 @@ def appeals_delete(appeal):
 	form = DeleteForm()
 
 	if form.validate_on_submit():
-		appeal = models.Appeal.query.get(appeal)
-		models.db.session.delete(appeal)
-		models.db.session.commit()
+		appeal = models.Appeal.query.get_or_404(appeal)
+		db.session.delete(appeal)
+		db.session.commit()
 
 		log = ActionLog(
 			user=current_user,
 			action='card.appeal.delete(%s)'%(appeal.id))
-		models.db.session.add(log)
-		models.db.session.commit()
+		db.session.add(log)
+		db.session.commit()
 
 	return redirect(url_for('cards.appeals_index'))
 
@@ -167,7 +168,7 @@ def skills_index():
 def skills_form(skill=None):
 	mode = 'new'
 	if skill is not None:
-		skill = models.Skill.query.get(skill)
+		skill = models.Skill.query.get_or_404(skill)
 		mode = 'edit'
 
 	form = forms.Skill(obj=skill)
@@ -177,14 +178,14 @@ def skills_form(skill=None):
 			skill = models.Skill()
 		form.populate_obj(skill)
 
-		models.db.session.add(skill)
-		models.db.session.commit()
+		db.session.add(skill)
+		db.session.commit()
 
 		log = ActionLog(
 			user=current_user,
 			action='card.skill.%s(%s)'%(mode, skill.id))
-		models.db.session.add(log)
-		models.db.session.commit()
+		db.session.add(log)
+		db.session.commit()
 
 		return redirect(url_for('cards.skills_index'))
 
@@ -199,14 +200,14 @@ def skills_delete(skill):
 	form = DeleteForm()
 
 	if form.validate_on_submit():
-		skill = models.Skill.query.get(skill)
-		models.db.session.delete(skill)
-		models.db.session.commit()
+		skill = models.Skill.query.get_or_404(skill)
+		db.session.delete(skill)
+		db.session.commit()
 
 		log = ActionLog(
 			user=current_user,
 			action='card.skill.delete(%s)'%(skill.id))
-		models.db.session.add(log)
-		models.db.session.commit()
+		db.session.add(log)
+		db.session.commit()
 
 	return redirect(url_for('cards.skills_index'))
