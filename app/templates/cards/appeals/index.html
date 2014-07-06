@@ -22,15 +22,17 @@
 			{% if logged_in %}<th></th>{% endif %}
 		</tr>
 	</thead>
-	<tfoot>
-		<tr>
-			<td colspan="{% if logged_in %}8{% else %}7{% endif %}">
-				<a href="{{ url_for('cards.appeals_create') }}" class="btn btn-success btn-sm">
-					<span class="glyphicon glyphicon-plus"></span> Add new appeal
-				</a>
-			</td>
-		</tr>
-	</tfoot>
+	{% if logged_in %}
+		<tfoot>
+			<tr>
+				<td colspan="8">
+					<a href="{{ url_for('cards.appeals_create') }}" class="btn btn-success btn-sm">
+						<span class="glyphicon glyphicon-plus"></span> Add new appeal
+					</a>
+				</td>
+			</tr>
+		</tfoot>
+	{% endif %}
 	<tbody>
 		{% for appeal in appeals %}
 			<tr>

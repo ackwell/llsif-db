@@ -109,13 +109,13 @@ class Appeal(db.Model):
 # Card <--> Region join table
 availability = db.Table('availability',
 	db.Column('card_id', db.Integer, db.ForeignKey('card.id'), primary_key=True),
-	db.Column('region_id', db.String, db.ForeignKey('region.id'), primary_key=True)
+	db.Column('region_id', db.String(8), db.ForeignKey('region.id'), primary_key=True)
 )
 
 
 # ohgodtheykeepreleasingnewregions
 class Region(db.Model):
-	id = db.Column(db.String, primary_key=True)
+	id = db.Column(db.String(8), primary_key=True)
 	name = db.Column(db.String(32))
 
 	def __repr__(self):

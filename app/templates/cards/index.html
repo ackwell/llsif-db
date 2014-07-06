@@ -30,15 +30,17 @@
 			{% if logged_in %}<th></th>{% endif %}
 		</tr>
 	</thead>
-	<tfoot>
-		<tr>
-			<td colspan="{% if logged_in %}15{% else %}14{% endif %}">
-				<a href="{{ url_for('cards.create') }}" class="btn btn-success btn-sm">
-					<span class="glyphicon glyphicon-plus"></span> Add new card
-				</a>
-			</td>
-		</tr>
-	</tfoot>
+	{% if logged_in %}
+		<tfoot>
+			<tr>
+				<td colspan="15">
+					<a href="{{ url_for('cards.create') }}" class="btn btn-success btn-sm">
+						<span class="glyphicon glyphicon-plus"></span> Add new card
+					</a>
+				</td>
+			</tr>
+		</tfoot>
+	{% endif %}
 	<tbody>
 		{% for card in cards %}
 			<tr>

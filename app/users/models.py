@@ -33,6 +33,10 @@ class User(db.Model, UserMixin):
 		lazy='dynamic',
 		backref='user')
 
+	accounts = db.relationship('Account',
+		lazy='dynamic',
+		backref='user')
+
 class Role(db.Model, RoleMixin):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(80), unique=True)
@@ -47,3 +51,16 @@ class ActionLog(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	action = db.Column(db.String(255))
 	time = db.Column(db.DateTime, default=datetime.today)
+
+
+class Account(db.Model):
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+	region_id = db.Column(db.String(8), db.ForeignKey('region.id'), primary_key=True)
+
+	name = db.Column(db.String(128))
+	friend_code = db.Column(db.String(12))
+	notes = db.Column(db.String(255))
+	visible = db.Column(db.Boolean, nullable=False, default=False)
+
+	region = db.relationship('Region',
+		backref=db.backref('accounts', lazy='dynamic'))

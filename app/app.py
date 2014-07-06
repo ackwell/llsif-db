@@ -22,6 +22,7 @@ def create_app():
 def configure_blueprints(app):
 	app.register_blueprint(home.blueprint)
 	app.register_blueprint(cards.blueprint)
+	app.register_blueprint(users.blueprint)
 
 def configure_extensions(app):
 	db.init_app(app)
