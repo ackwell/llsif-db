@@ -26,9 +26,9 @@ def form(card=None):
 	mode = 'new'
 	if card is not None:
 		card = models.Card.query.get_or_404(card)
+		card.rarity = card.normal_state.rarity
 		mode = 'edit'
 
-	card.rarity = card.normal_state.rarity
 	form = forms.Card(obj=card)
 
 	# Will only run validations on POST
