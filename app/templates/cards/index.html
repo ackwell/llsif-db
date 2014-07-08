@@ -10,7 +10,7 @@
 		<div class="card">
 			<div class="caption {{ card.attribute }}">
 				<span class="left">{{ card.id }}</span>
-				<span class="right">X</span>
+				<span class="right">{{ card.normal_state.rarity.short_name }}</span>
 			</div>
 		</div>
 	{% endfor %}

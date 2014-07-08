@@ -53,6 +53,7 @@ class State(db.Model):
 class Rarity(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=False)
 	name = db.Column(db.String(20))
+	short_name = db.Column(db.String(4))
 
 	states = db.relationship('State',
 		backref='rarity',
