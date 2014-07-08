@@ -28,4 +28,5 @@ SECURITY_TRACKABLE = True
 SECURITY_CHANGEABLE = True
 
 # Assets
+ASSETS_DEBUG = DEBUG
 LESS_BIN = os.path.join(basedir, '..', 'node_modules', '.bin', 'lessc')

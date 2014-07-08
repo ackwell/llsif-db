@@ -1,0 +1,58 @@
+
+@import 'macros.less';
+
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+
+body {
+	background-color: #f9f9f9;
+	font-family: 'Roboto', sans-serif;
+}
+
+.page-width {
+	width: 1140px;
+	margin: 0 auto;
+}
+
+.cyan {
+	color: white;
+	background-color: #00bcd4;
+}
+
+header {
+	height: 480px;
+
+	.titles {
+		height: 240px;
+		position: relative;
+	}
+
+	h1 {
+		font-size: 112px;
+		line-height: 120px;
+		font-weight: 300;
+		.opacity(80);
+
+		position: absolute;
+		bottom: 0;
+	}
+
+	.context {
+		font-size: 32px;
+		.opacity(50);
+
+		position: absolute;
+		bottom: 120px;
+	}
+}
+
+.sheet {
+	margin-top: -240px;
+	padding: 4px;
+
+	background-color: white;
+	box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.45);
+}

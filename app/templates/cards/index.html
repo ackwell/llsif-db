@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% import 'macro/form.html' as f %}
 
-{% block content %}
-<h1>Cards</h1>
+{% block context %}Database/{% endblock %}
+{% block title %}Cards{% endblock %}
 
+{% block content %}
 <table class="table table-bordered sortable">
 	<thead>
 		<tr>

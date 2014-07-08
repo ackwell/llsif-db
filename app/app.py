@@ -1,7 +1,8 @@
 
 from flask import Flask, request
-from .extensions import db, security, mail
+from .extensions import db, security, mail, assets
 from .context_processor import context_processor
+from .assets import register_assets
 from . import home, cards, users
 
 __all__ = ['create_app']
@@ -30,3 +31,6 @@ def configure_extensions(app):
 	security.init_app(app, users.security_datastore, **users.security_forms)
 
 	mail.init_app(app)
+
+	assets.init_app(app)
+	register_assets()

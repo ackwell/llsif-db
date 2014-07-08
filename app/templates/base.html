@@ -1,4 +1,3 @@
-{# Only include head and header if not rendering via ajax #}
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,10 +10,20 @@
 	{% include 'include/css.html' %}
 </head>
 <body>
+	<!-- i'll work nav out later
 	{% include 'include/header.html' %}
+	-->
 
-	<div class="container">
+	<header class="cyan">
+		<div class="page-width titles">
+			<div class="context">{% block context %}{% endblock %}</div>
+			<h1>{% block title %}{% endblock %}</h1>
+		</div>
+	</header>
+
+	<div class="sheet page-width">
 		{# Flash messages #}
+		<!-- will add later
 		{% with messages = get_flashed_messages() %}
 			{% if messages %}
 				{% for message in messages %}
@@ -25,6 +34,8 @@
 				{% endfor %}
 			{% endif %}
 		{% endwith %}
+		-->
+
 		
 		{% block content %}{% endblock %}
 	</div>
