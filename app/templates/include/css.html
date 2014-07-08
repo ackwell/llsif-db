@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/select2.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/select2-bootstrap.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% assets 'css' %}
+	<link rel="stylesheet" href="{{ ASSET_URL }}">
+{% endassets %}

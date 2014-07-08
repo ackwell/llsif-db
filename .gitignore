@@ -7,3 +7,5 @@ notes.txt
 backups
 instance
 design
+node_modules
+app/static/all.css

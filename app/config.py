@@ -26,3 +26,6 @@ SECURITY_REGISTERABLE = True
 SECURITY_RECOVERABLE = True
 SECURITY_TRACKABLE = True
 SECURITY_CHANGEABLE = True
+
+# Assets
+LESS_BIN = os.path.join(basedir, '..', 'node_modules', '.bin', 'lessc')
