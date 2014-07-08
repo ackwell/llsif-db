@@ -1,6 +1,9 @@
 
 @import 'macros.less';
 
+.clear:before, .clear:after {content: "\0020"; display: block; height: 0; overflow: hidden;}
+.clear:after {clear: both;}
+
 *, *:before, *:after {
 	-webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
@@ -14,7 +17,8 @@ body {
 
 .page-width {
 	width: 1140px;
-	margin: 0 auto;
+	margin-left: auto !important;
+	margin-right: auto !important;
 }
 
 .cyan {
@@ -31,18 +35,19 @@ header {
 	}
 
 	h1 {
+		position: absolute;
+		bottom: 0;
+
 		font-size: 112px;
 		line-height: 120px;
 		font-weight: 300;
-		.opacity(80);
 
-		position: absolute;
-		bottom: 0;
+		.opacity(80);
 	}
 
 	.context {
 		font-size: 32px;
-		.opacity(50);
+		.opacity(60);
 
 		position: absolute;
 		bottom: 120px;
@@ -50,9 +55,58 @@ header {
 }
 
 .sheet {
-	margin-top: -240px;
+	margin: -240px 0 120px;
 	padding: 4px;
 
 	background-color: white;
 	box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.45);
+}
+
+.card-grid {
+	margin: -4px 0 0 -4px;
+
+	.card {
+		width: 138px;
+		height: 184px;
+		margin: 4px 0 0 4px;
+
+		position: relative;
+		float: left;
+
+		background-color: #aaaaaa;
+
+		.caption {
+			width: 100%;
+			height: 46px;
+
+			position: absolute;
+			bottom: 0;
+
+			color: white;
+			font-size: 24px;
+			line-height: 46px;
+
+			&.smile {
+				.rgba(255, 102, 155, 0.75);
+			}
+
+			&.pure {
+				.rgba(110, 235, 133, 0.75);
+			}
+
+			&.cool {
+				.rgba(92, 204, 244, 0.75);
+			}
+
+			.left {
+				padding-left: 10px;
+				float: left;
+			}
+
+			.right {
+				padding-right: 10px;
+				float: right;
+			}
+		}
+	}
 }
