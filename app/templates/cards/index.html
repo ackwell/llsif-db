@@ -7,12 +7,21 @@
 {% block content %}
 <div class="card-grid clear">
 	{% for card in cards %}
-		<div class="card">
-			<div class="caption {{ card.attribute }} {{ card.normal_state.rarity.short_name|lower }}">
-				<span class="left">{{ card.id }}</span>
-				<span class="right">{{ card.normal_state.rarity.short_name }}</span>
+		{#
+		Yes, this is horrendous.
+		Yes, I could probably avoid it by refactoring the join in the DB.
+		No, I'm not about to do that.
+		#}
+
+		{% for state_name in ['normal_state', 'idolised_state'] %}
+			{% set state = card|attr(state_name) %}
+			<div class="card">
+				<div class="caption {{ card.attribute }} {{ state.rarity.short_name|lower|strip('+') }}">
+					<span class="left">{{ card.id }}</span>
+					<span class="right">{{ state.rarity.short_name }}</span>
+				</div>
 			</div>
-		</div>
+		{% endfor %}
 	{% endfor %}
 </div>
 {% endblock %}

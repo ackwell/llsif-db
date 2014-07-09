@@ -1,7 +1,7 @@
 
 from flask import Flask, request
 from .extensions import db, security, mail, assets
-from .context_processor import context_processor
+from .jinja_conf import context_processor, filters
 from .assets import register_assets
 from . import home, cards, users
 
@@ -13,12 +13,16 @@ def create_app():
 	app.config.from_pyfile('config.py', silent=True)
 
 	# Set up application
+	configure_jinja(app)
 	configure_blueprints(app)
 	configure_extensions(app)
 
+	return app
+
+def configure_jinja(app):
 	app.context_processor(context_processor)
 
-	return app
+	app.jinja_env.filters = dict(app.jinja_env.filters.items() + filters().items())
 
 def configure_blueprints(app):
 	app.register_blueprint(home.blueprint)

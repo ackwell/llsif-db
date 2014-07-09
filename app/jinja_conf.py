@@ -7,3 +7,8 @@ def context_processor():
 		'logged_in': current_user.is_authenticated(),
 		'delete_form': DeleteForm
 	}
+
+def filters():
+	return {
+		'strip': lambda string, chars: string.strip(chars)
+	}
