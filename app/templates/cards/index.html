@@ -8,7 +8,7 @@
 <div class="card-grid clear">
 	{% for card in cards %}
 		<div class="card">
-			<div class="caption {{ card.attribute }}">
+			<div class="caption {{ card.attribute }} {{ card.normal_state.rarity.short_name|lower }}">
 				<span class="left">{{ card.id }}</span>
 				<span class="right">{{ card.normal_state.rarity.short_name }}</span>
 			</div>
