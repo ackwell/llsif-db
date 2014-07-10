@@ -16,6 +16,9 @@
 		{% for state_name in ['normal_state', 'idolised_state'] %}
 			{% set state = card|attr(state_name) %}
 			<div class="card">
+				{% if state.icon %}
+					<img src="{{ card_images.url(state.icon) }}">
+				{% endif %}
 				<div class="caption {{ card.attribute }} {{ state.rarity.short_name|lower|strip('+') }}">
 					<span class="left">{{ card.id }}</span>
 					<span class="right">{{ state.rarity.short_name }}</span>

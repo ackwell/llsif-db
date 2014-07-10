@@ -1,12 +1,14 @@
 
 from flask import Blueprint, render_template, redirect, url_for
 from flask.ext.security import login_required, current_user
-from . import models, forms
 from sqlalchemy.exc import IntegrityError
+from PIL import Image
+from . import models, forms
 from ..util import DeleteForm
 from ..users import ActionLog
 from ..extensions import db
 from ..uploads import card_images
+import os
 
 blueprint = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -17,7 +19,8 @@ blueprint = Blueprint('cards', __name__, url_prefix='/cards')
 @blueprint.route('/')
 def index():
 	return render_template('cards/index.html',
-		cards=models.Card.query.all())
+		cards=models.Card.query.all(),
+		card_images=card_images)
 
 
 @blueprint.route('/create', methods=['GET', 'POST'], endpoint='create')
@@ -45,9 +48,38 @@ def form(card=None):
 			field = getattr(form, state_name).icon
 
 			if field.data:
-				# There is an uploaded file, save and replace field data to be populated
-				field.data = card_images.save(field.data,
+				# There is an uploaded file, save then resize with Pillow
+				filename = card_images.save(field.data,
 					name='%s_%s_icon.' % (card.id, state_name,))
+
+				# Someone should murder me for writing this bullshit.
+				# Why is this even in a fucking controller?
+				# TODO: Move all this Pillow bullshit into a separate file.
+				infile = card_images.path(filename)
+				filename = os.path.splitext(filename)[0] + '.jpg'
+				outfile = card_images.path(filename)
+
+				image = Image.open(infile)
+
+				new_size = (138, 184)
+				cur_ratio = image.size[0] / float(image.size[1])
+				new_ratio = new_size[0] / float(new_size[1])
+
+				if new_ratio > cur_ratio:
+					image = image.resize((new_size[0], int(round(new_size[0] * image.size[1] / image.size[0]))), Image.ANTIALIAS)
+					image = image.crop((0, int(round((image.size[1] - new_size[1]) / 2)), image.size[0], int(round((image.size[1] + new_size[1]) / 2))))
+				elif new_ratio < cur_ratio:
+					image = image.resize((int(round(new_size[1] * image.size[0] / image.size[1])), new_size[1]), Image.ANTIALIAS)
+					image.crop((int(round((image.size[0] - new_size[0]) / 2)), 0, int(round((image.size[0] + new_size[0]) / 2)), image.size[1]))
+				else :
+					image = image.resize((new_size[0], new_size[1]), Image.ANTIALIAS)
+
+				image.save(outfile, 'JPEG', quality=80)
+
+				if infile != outfile:
+					os.remove(infile)
+
+				field.data = filename
 			else:
 				# No uploaded file, save the previous data from the model
 				field.data = getattr(card, state_name).icon

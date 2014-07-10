@@ -21,6 +21,18 @@ A card database for the LoveLive: School Idol Festival mobile game.
 
 ## Setting up
 
+**Required packages:**
+- For Pillow:
+	- `libtiff4-dev`
+	- `libjpeg8-dev`
+	- `zlib1g-dev`
+	- `libfreetype6-dev`
+	- `liblcms2-dev`
+	- `libwebp-dev`
+	- `tcl8.5-dev`
+	- `tk8.5-dev`
+	- `python-tk`
+
 Setup / distribution / contributing guides to come.
 
 If you feel you could help out on this project, pull requests are absolutely open - I'll review any requests sent in as soon as I can. Frontend is the area with the least coverage currently, I'm no designer.
