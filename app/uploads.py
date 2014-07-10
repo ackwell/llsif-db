@@ -7,8 +7,8 @@ class OverwriteUploadSet(UploadSet):
 		path = os.path.join(target_folder, basename)
 		if os.path.exists(path):
 			os.remove(path)
-		return path
+		return basename
 
-card_thumbs = OverwriteUploadSet('cardthumbs', IMAGES)
+card_images = OverwriteUploadSet('cards', IMAGES)
 
-upload_sets = (card_thumbs,)
+upload_sets = (card_images,)

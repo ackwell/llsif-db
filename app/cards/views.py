@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from ..util import DeleteForm
 from ..users import ActionLog
 from ..extensions import db
-from ..uploads import card_thumbs
+from ..uploads import card_images
 
 blueprint = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -40,26 +40,24 @@ def form(card=None):
 			card.normal_state = models.State()
 			card.idolised_state = models.State()
 
+		# Handle files if available
+		for state_name in ['normal_state', 'idolised_state']:
+			field = getattr(form, state_name).icon
+
+			if field.data:
+				# There is an uploaded file, save and replace field data to be populated
+				field.data = card_images.save(field.data,
+					name='%s_%s_icon.' % (card.id, state_name,))
+			else:
+				# No uploaded file, save the previous data from the model
+				field.data = getattr(card, state_name).icon
+
 		form.populate_obj(card)
 
 		# Set the state rarities
 		rarity = form.rarity.data
 		card.normal_state.rarity = rarity
 		card.idolised_state.rarity = models.Rarity.query.get(rarity.id + 1)
-
-		# Handle files if available
-		for state_name in ['normal_state', 'idolised_state']:
-			field = getattr(form, state_name).icon
-			print
-
-			filename = ''
-			if field.data:
-				filename = card_thumbs.save(field.data,
-					name='%s_%s.' % (card.id, state_name,))
-			
-			getattr(card, state_name).icon = filename
-
-
 
 		# Save, catching ID duplicates
 		# (Not using a verifier, it'd double the SQL queries, and be a general PITA)
