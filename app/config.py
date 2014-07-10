@@ -1,13 +1,12 @@
 
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
+appdir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # Flask 
 DEBUG = True
 
 # Database
 SQLALCHEMY_DATABASE_URI = "mysql://lovelive:lovelive@localhost/lovelive"
-SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'database')
 SQLALCHEMY_POOL_RECYCLE = 1
 SQLALCHEMY_ECHO = True
 
@@ -29,4 +28,8 @@ SECURITY_CHANGEABLE = True
 
 # Assets
 ASSETS_DEBUG = DEBUG
-LESS_BIN = os.path.join(basedir, '..', 'node_modules', '.bin', 'lessc')
+LESS_BIN = os.path.join(appdir, 'node_modules', '.bin', 'lessc')
+
+# Uploads
+MAX_CONTENT_LENGTH = 2 * 1024 * 1024 # 2MB
+UPLOADS_DEFAULT_DEST = os.path.join(appdir, 'app', 'static', 'uploads')

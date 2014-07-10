@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from ..util import DeleteForm
 from ..users import ActionLog
 from ..extensions import db
+from ..uploads import card_thumbs
 
 blueprint = Blueprint('cards', __name__, url_prefix='/cards')
 
@@ -45,6 +46,20 @@ def form(card=None):
 		rarity = form.rarity.data
 		card.normal_state.rarity = rarity
 		card.idolised_state.rarity = models.Rarity.query.get(rarity.id + 1)
+
+		# Handle files if available
+		for state_name in ['normal_state', 'idolised_state']:
+			field = getattr(form, state_name).icon
+			print
+
+			filename = ''
+			if field.data:
+				filename = card_thumbs.save(field.data,
+					name='%s_%s.' % (card.id, state_name,))
+			
+			getattr(card, state_name).icon = filename
+
+
 
 		# Save, catching ID duplicates
 		# (Not using a verifier, it'd double the SQL queries, and be a general PITA)

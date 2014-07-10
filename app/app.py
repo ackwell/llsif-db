@@ -1,8 +1,10 @@
 
 from flask import Flask, request
+from flask.ext.uploads import configure_uploads, patch_request_class
 from .extensions import db, security, mail, assets
 from .jinja_conf import context_processor, filters
 from .assets import register_assets
+from .uploads import upload_sets
 from . import home, cards, users
 
 __all__ = ['create_app']
@@ -16,6 +18,7 @@ def create_app():
 	configure_jinja(app)
 	configure_blueprints(app)
 	configure_extensions(app)
+	configure_uploads(app, upload_sets)
 
 	return app
 

@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1>{{ mode|capitalize }} Card</h1>
-<form action="" method="post" role="form">
+<form action="" method="post" role="form" enctype="multipart/form-data" >
 	{{ form.hidden_tag() }}
 
 	{{ f.errors(form) }}
@@ -27,7 +27,7 @@
 			<div class="col-md-1">{{ f.field(state.smile) }}</div>
 			<div class="col-md-1">{{ f.field(state.pure) }}</div>
 			<div class="col-md-1">{{ f.field(state.cool) }}</div>
-			<div class="col-md-3">{{ f.field(state.icon, disabled=True) }}</div>
+			<div class="col-md-3">{{ f.field(state.icon) }}</div>
 			<div class="col-md-4">{{ f.field(state.image, disabled=True) }}</div>
 		</div>
 	{% endfor %}

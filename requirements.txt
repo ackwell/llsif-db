@@ -7,3 +7,4 @@ Flask-Security==1.7.3
 py-bcrypt==0.4
 Flask-Assets==0.10
 cssmin==0.2.0
+Flask-Uploads==0.1.3

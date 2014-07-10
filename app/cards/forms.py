@@ -1,19 +1,12 @@
 
 from flask.ext.wtf import Form
-from urlparse import urlparse
-from wtforms.fields import IntegerField, StringField, FormField, SelectField, DecimalField
+from wtforms.fields import IntegerField, StringField, FormField, SelectField, DecimalField, FileField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
-from wtforms.validators import Optional, InputRequired, NumberRange, ValidationError
+from wtforms.validators import Optional, InputRequired, NumberRange
 from . import models
 
 # Stuff I reuse
 attributes = [('smile', 'Smile'), ('pure', 'Pure'), ('cool', 'Cool')]
-
-# Validators
-def external_url(form, field):
-	url = urlparse(field.data)
-	if url.scheme not in ('http', 'https') or not url.netloc:
-		raise ValidationError('Field must be a valid external URL')
 
 
 # Forms
@@ -22,8 +15,9 @@ class State(Form):
 	smile = IntegerField('Smile', [Optional()])
 	pure = IntegerField('Pure', [Optional()])
 	cool = IntegerField('Cool', [Optional()])
-	icon = StringField('Icon', [external_url, Optional()])
-	image = StringField('Image', [external_url, Optional()])
+	
+	icon = FileField('Icon', [Optional()])
+	image = FileField('Image', [Optional()])
 
 
 class Card(Form):
