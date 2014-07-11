@@ -2,9 +2,8 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask.ext.security import login_required, current_user
 from sqlalchemy.exc import IntegrityError
-from PIL import Image
 from . import models, forms
-from ..util import DeleteForm
+from ..util import DeleteForm, resize_image
 from ..users import ActionLog
 from ..extensions import db
 from ..uploads import card_images
@@ -52,29 +51,11 @@ def form(card=None):
 				filename = card_images.save(field.data,
 					name='%s_%s_icon.' % (card.id, state_name,))
 
-				# Someone should murder me for writing this bullshit.
-				# Why is this even in a fucking controller?
-				# TODO: Move all this Pillow bullshit into a separate file.
 				infile = card_images.path(filename)
 				filename = os.path.splitext(filename)[0] + '.jpg'
 				outfile = card_images.path(filename)
 
-				image = Image.open(infile)
-
-				new_size = (138, 184)
-				cur_ratio = image.size[0] / float(image.size[1])
-				new_ratio = new_size[0] / float(new_size[1])
-
-				if new_ratio > cur_ratio:
-					image = image.resize((new_size[0], int(round(new_size[0] * image.size[1] / image.size[0]))), Image.ANTIALIAS)
-					image = image.crop((0, int(round((image.size[1] - new_size[1]) / 2)), image.size[0], int(round((image.size[1] + new_size[1]) / 2))))
-				elif new_ratio < cur_ratio:
-					image = image.resize((int(round(new_size[1] * image.size[0] / image.size[1])), new_size[1]), Image.ANTIALIAS)
-					image.crop((int(round((image.size[0] - new_size[0]) / 2)), 0, int(round((image.size[0] + new_size[0]) / 2)), image.size[1]))
-				else :
-					image = image.resize((new_size[0], new_size[1]), Image.ANTIALIAS)
-
-				image.save(outfile, 'JPEG', quality=80)
+				resize_image(infile, outfile, (138, 184), quality=80)
 
 				if infile != outfile:
 					os.remove(infile)
