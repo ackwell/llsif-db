@@ -49,7 +49,7 @@ def form(card=None):
 			if field.data:
 				# There is an uploaded file, save then resize with Pillow
 				filename = card_images.save(field.data,
-					name='%s_%s_icon.' % (card.id, state_name,))
+					name='%s_%s.' % (card.id, field.name,))
 
 				infile = card_images.path(filename)
 				filename = os.path.splitext(filename)[0] + '.jpg'
