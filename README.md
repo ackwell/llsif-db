@@ -22,6 +22,8 @@ A card database for the LoveLive: School Idol Festival mobile game.
 ## Setting up
 
 **Required packages:**
+- For MySQL-python
+	- `libssl-dev`
 - For Pillow:
 	- `libtiff4-dev`
 	- `libjpeg8-dev`
@@ -32,6 +34,8 @@ A card database for the LoveLive: School Idol Festival mobile game.
 	- `tcl8.5-dev`
 	- `tk8.5-dev`
 	- `python-tk`
+- For uWSGI (if using to serve)
+	- `libpcre3-dev`
 
 Setup / distribution / contributing guides to come.
 
