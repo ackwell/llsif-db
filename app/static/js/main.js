@@ -27,4 +27,9 @@ $(function() {
 		cssAsc: 'header-sort-up',
 		cssDesc: 'header-sort-down'
 	});
+
+	// /cards/ popouts
+	$('.card-grid .card').click(function() {
+		console.log($(this).data('card'));
+	});
 });

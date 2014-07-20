@@ -17,7 +17,7 @@ blueprint = Blueprint('cards', __name__, url_prefix='/cards')
 
 @blueprint.route('/')
 def index():
-	return render_template('cards/index.html',
+	return render_template('cards/grid.html',
 		cards=models.Card.query.all(),
 		card_images=card_images)
 
